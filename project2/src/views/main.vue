@@ -3,7 +3,7 @@
         <div class = "searchbookImg">
         <section class="searchbook">
             <h1 class="maintit">
-                여행지 검색<span>찾고자 하는 여행지를 검색해 주세요</span>
+                여행지 검색<span>찾고자 하는 여행지를 검색해 주세요.</span>
             </h1>
             <div class="inputarea">
                 <b-form-input v-model="keyword" />
