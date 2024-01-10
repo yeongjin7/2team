@@ -121,7 +121,7 @@ export default {
             // 메뉴명 배열
             menulists: [
                 { menutext: "소개", link: "/book" },
-                { menutext: "공지사항", link: "/reference" },
+                { menutext: "공지사항", link: "/notice" },
                 { menutext: "TRAVEL", link: "/movieclass" },
                 { menutext: "CONTENTS", link: "/classsample" },
                 { menutext: "마이페이지", link: "/company" },

@@ -15,6 +15,26 @@ const pageRouter = {
             name: "mypage",
             component: () => import("@/views/mypage.vue"),
         },
+        {
+            path: "/notice",
+            name: "notice",
+            component: () => import("@/views/notice.vue"),
+        },
+        {
+            path: "/userBoard",
+            name: "userBoard",
+            component: () => import("@/views/userBoard.vue"),
+        },
+        {
+            path: "/myTravel",
+            name: "myTravel",
+            component: () => import("@/views/myTravel.vue"),
+        },
+        {
+            path: "/intro",
+            name: "intro",
+            component: () => import("@/views/intro.vue"),
+        },
     ],
 };
 export default pageRouter;
