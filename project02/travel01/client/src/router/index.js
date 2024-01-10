@@ -1,4 +1,3 @@
-// import VueRouter from "vue-router";
 import pageRouter from "./modules/pageRouter";
 import { createRouter , createWebHistory } from 'vue-router'
 import { createApp } from 'vue';
