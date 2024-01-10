@@ -124,7 +124,7 @@ export default {
                 { menutext: "공지사항", link: "/reference" },
                 { menutext: "TRAVEL", link: "/movieclass" },
                 { menutext: "CONTENTS", link: "/classsample" },
-                { menutext: "마이페이지", link: "/company" },
+                { menutext: "마이페이지", link: "/mypage" },
             ],
             form: {
                 id: "",

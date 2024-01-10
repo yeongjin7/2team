@@ -10,6 +10,11 @@ const pageRouter = {
             name: "main",
             component: () => import("@/views/main.vue"),
         },
+        {
+            path: "/mypage",
+            name: "mypage",
+            component: () => import("@/views/mypage.vue"),
+        },
     ],
 };
 export default pageRouter;
