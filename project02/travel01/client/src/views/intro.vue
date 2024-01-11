@@ -69,7 +69,7 @@
 }
 
 .introImg {
-    background-image: url(C:\Users\JMH\Desktop\img\introIMG.jpg);
+    /* background-image: url(C:\Users\JMH\Desktop\img\introIMG.jpg); */
     background-size: cover;
     width: 1224px;
     height: 647px;
