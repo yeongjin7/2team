@@ -3,7 +3,7 @@
         <div class = "searchbookImg">
         <section class="searchbook">
             <h1 class="maintit">
-                여행지 검색<span>찾고자 하는 여행지를 검색해 주세요.</span>
+                여행지 검색<span>떠나고 싶은 여행지를 검색해 주세요.</span>
             </h1>
             <div class="inputarea">
                 <b-form-input v-model="keyword" />
@@ -34,11 +34,11 @@
         <!-- 새로 나온 도서 -->
         <section class="newbook">
             <h1 class="maintit">
-                인기 여행지<span>좋아요가 많아요</span>
+                인기 여행지<span>좋아요가 많다구요</span>
             </h1>
             <div class="tapcontent">
                 <div class="tap">
-                    <b-button variant="tap active" @click="AddContents('Newbooks_it')">IT 전문서</b-button>
+                    <b-button variant="tap active" @click="AddContents('Newbooks_it')"></b-button>
                     <b-button variant="tap" @click="AddContents('Newbooks_work')">업무 능력, 기타</b-button>
                     <b-button variant="tap" @click="AddContents('Newbooks_photo')">사진 예술</b-button>
                     <b-button variant="tap" @click="AddContents('Newbooks_science')">데이터 과학</b-button>
@@ -137,12 +137,12 @@ export default {
                 ],
             },
             hashdata: [
-                { text: "html", value: "html" },
-                { text: "vue", value: "vue" },
-                { text: "css", value: "css" },
-                { text: "javascript", value: "javascript" },
-                { text: "자료구조/알고리즘", value: "자료구조/알고리즘" },
-                { text: "파이썬", value: "파이썬" },
+                { text: "강릉", value: "강릉" },
+                { text: "부산", value: "부산" },
+                { text: "서울", value: "서울" },
+                { text: "관광지", value: "관광지" },
+                { text: "맛집", value: "맛집" },
+                { text: "나홀로여행", value: "나홀로여행" },
             ],
             booksname: [
                 {
