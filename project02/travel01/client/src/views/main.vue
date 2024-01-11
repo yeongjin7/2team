@@ -6,10 +6,10 @@
                 여행지 검색<span>찾고자 하는 여행지를 검색해 주세요.</span>
             </h1>
             <div class="inputarea">
-                <b-form-input v-model="keyword" />
-                <b-button variant="search"><i class="bi bi-search"></i></b-button>
+                <b-button variant="search" class = "searchbtn"><i class="bi bi-search"></i></b-button>
+                <input class = "searchinput" value="가고싶은 여행지를 입력하세요!" >
                 <div class="autolayer" v-if="keyword.length > 0" :class="{ none: autocomplate.length === 0 }">
-                    <ul v-if="autocomplate.length > 0">  
+                    <ul v-if="autocomplate.length > 0">
                         <li
                             v-for="(item, index) in autocomplate[0].books"
                             :key="index"
@@ -33,23 +33,21 @@
     </div>
         <!-- 새로 나온 도서 -->
         <section class="newbook">
-            <h1 class="maintit">
-                인기 여행지<span>좋아요가 많아요</span>
+            <h1 class="maintit bset">
+                인기 여행지
             </h1>
             <div class="tapcontent">
                 <div class="tap">
-                    <b-button variant="tap active" @click="AddContents('Newbooks_it')">IT 전문서</b-button>
-                    <b-button variant="tap" @click="AddContents('Newbooks_work')">업무 능력, 기타</b-button>
-                    <b-button variant="tap" @click="AddContents('Newbooks_photo')">사진 예술</b-button>
-                    <b-button variant="tap" @click="AddContents('Newbooks_science')">데이터 과학</b-button>
+                    <b-button variant="tap active" @click="AddContents('Newbooks_it')">인기순</b-button>
+                    <b-button variant="tap" @click="AddContents('Newbooks_work')">신규순</b-button>
+<!--                <b-button variant="tap" @click="AddContents('Newbooks_photo')"></b-button>-->
+                    <b-button variant="tap" @click="AddContents('Newbooks_science')">공지사항</b-button>
                 </div>
-                <VueSlickCarousel class="mainslider" v-bind="settings">
-                    <div class="rollimg" v-for="(item, index) in Newbooks" :key="index">
-                        <span class="imgbox"><img :src="item.imgurl" /></span>
-                        <strong v-html="item.name"></strong>
-                        <span class="textbox" v-html="item.subdec"></span>
-                    </div>
-                </VueSlickCarousel>
+                <div class="rollimg" v-for="(item, index) in Newbooks" :key="index">
+                  <span class="imgbox"><img :src="item.imgurl" /></span>
+                  <strong v-html="item.name"></strong>
+                  <!--<span class="textbox" v-html="item.subdec"></span>-->
+                </div>
             </div>
         </section>
         <!-- 도서 검색 -->
@@ -62,17 +60,6 @@
                 <i class="bi" :class="item.iconname"></i>
             </div>
         </section>
-        <!-- 공지 사항 -->
-        <section class="notice">
-            <div class="noticebox">
-                <h1 class="maintit">공지 사항</h1>
-                <b-button variant="noticemore" @click="viewmore($event)" />
-                <div class="newsitem" v-for="(item, index) in noticelists" :key="index">
-                    <strong v-html="item.noticetit"></strong>
-                    <span v-html="item.date"></span>
-                </div>
-            </div>
-        </section>
     </section>
 </template>
 <script>
@@ -81,7 +68,7 @@ export default {
         return {
             Newbooks: [],
             Newbooks_it: [
-                { imgurl: "/images/books_image/book01.jpg", name: "Do it! 웹 사이트 따라 만들기", subdec: "HTML, CSS, 자바스크립트 문법서는 공부했지만, 웹 사이트를...", },
+                { imgurl:"/images/books_image/book01.jpg", name:"가자 유니버셜로!", },
                 { imgurl:'/images/books_image/book02.jpg', name:'Do it! 첫 알고리즘' , subdec:'160가지 그림과 스토리텔링으로 이해한다! 자료구조부터 보안...' },
                 { imgurl:'/images/books_image/book03.jpg', name:'Do it! C# 프로그래밍 입문' , subdec:'이 책은 기본이 충실하면서도 프로젝트 실습까지 챙긴 C# 입문서...' },
                 { imgurl:'/images/books_image/book04.jpg', name:'IT 5분 잡학사전' , subdec:'IT 분야 직장에서 일하는 나 요즘 주변에 이상한 사람이...' },
@@ -137,12 +124,12 @@ export default {
                 ],
             },
             hashdata: [
-                { text: "html", value: "html" },
-                { text: "vue", value: "vue" },
-                { text: "css", value: "css" },
-                { text: "javascript", value: "javascript" },
-                { text: "자료구조/알고리즘", value: "자료구조/알고리즘" },
-                { text: "파이썬", value: "파이썬" },
+                { text: "서울", value: "서울" },
+                { text: "부산", value: "부산" },
+                { text: "강릉", value: "강릉" },
+                { text: "맛집", value: "맛집" },
+                { text: "관광지", value: "관광지" },
+                { text: "축제", value: "축제" },
             ],
             booksname: [
                 {
@@ -170,16 +157,10 @@ export default {
             ],
             keyword: "",
             mainbanner: [
-                { stitle: "교수 및 강사 전용", maintit: "교재 샘플/강의 자료", iconname: "bi-stickies", url: "/classsample", },
-                { stitle: "스터디 카페", maintit: "Do it! 스터디룸", iconname: "bi-book-half", url: "https://cafe.naver.com/doitstudyroom", }, 
-                { stitle: "이지스 SNS", maintit: "페이스북", iconname: "bi-facebook", url: "https://www.facebook.com/easyspub/", },
+                { stitle: "작성하기", maintit: "나만의 여행만들기", iconname: "bi-stickies", url: "/userBoardCreate.vue", },
+                { stitle: "유저게시판", maintit: "게시판목록가기", iconname: "bi-book-half", url: "/userBoard.vue", },
+                { stitle: "공지사항", maintit: "공지사항목록가기", iconname: "bi-facebook", url: "/notice.vue", },
             ],
-            noticelists: [
-                { noticetit: "이지스퍼블리싱/이지스에듀 저작물 이용 지침", date: "2023.03.30", },
-                { noticetit: "IT 분야 편집/기획자 모집", date: "2023.02.16", },
-                { noticetit: "이지스퍼블리싱 전자책 대여 서비스 오픈!", date: "2021.10.28", },
-            ],
-        
         };
     },
     created() {
@@ -193,7 +174,7 @@ export default {
             event.target.classList.add("active");
         },
         gotoPage(url) {
-            if (url == "/classsample") {
+            if (url == "/notice") {
                 this.$router.push(url);
             } else {
                 window.open(url, "_blank");
@@ -218,3 +199,44 @@ export default {
     },
 };
 </script>
+<style scoped>
+  .maintit span{
+    color : black;
+  }
+  .maintit best{
+    margin-bottom: 70px;
+  }
+
+  img {
+    width: 250px;
+    height: 200px;
+    margin-left: 10px; /* 이미지 사이의 간격 조정 */
+    margin-bottom: 10px;
+    border: 2px solid rgba(89, 145, 255, 0);
+    border-radius: 5px;
+  }
+  .rollimg{
+    width: 300px;
+    margin-bottom: 30px;
+    float: left;
+    text-align: center;
+    margin-bottom: 5%;
+  }
+  .searchinput{
+    width: 70%;
+    background-color: white;
+   }
+  .inputarea{
+    background-color: white;
+  }
+  .searchbtn{
+    margin-left: 10px;
+  }
+  .bannermenu{
+    margin-top: 10%;
+    margin-bottom: 5%;
+  }
+  .tapcontent{
+    margin-bottom: 200px;
+  }
+</style>
