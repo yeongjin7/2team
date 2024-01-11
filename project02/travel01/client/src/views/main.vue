@@ -31,7 +31,7 @@
             
         </section>
     </div>
-        <!-- 새로 나온 도서 -->
+        <!-- newbook -->
         <section class="newbook">
             <h1 class="maintit bset">
                 인기 여행지
