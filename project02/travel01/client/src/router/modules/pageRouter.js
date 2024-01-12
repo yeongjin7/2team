@@ -50,6 +50,11 @@ const pageRouter = {
             name: "member",
             component: () => import("@/views/member.vue"),
         },
+        {
+            path: "/search",
+            name: "search",
+            component: () => import("@/views/search.vue"),
+        },
     ],
 };
 export default pageRouter;

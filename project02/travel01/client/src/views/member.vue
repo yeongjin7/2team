@@ -1,198 +1,144 @@
 <template>
-    <div class="signup-form">
-      <h2>회원 가입</h2>
-      <form @submit.prevent="submitForm">
-        <div class="form-group">
-          <label for="username">아이디:</label>
-        
-            <input class="input-group" type="text" id="username" v-model="username" required>
-            <button type="button" @click="checkUsername" class="button-secondary">중복<br>확인</button>
-       
-          <!-- <div class="input-group">
-            <input type="text" id="username" v-model="username" required>
-            <button type="button" @click="checkUsername" class="button-secondary">중복<br>확인</button>
-          </div> -->
-          
-          
-        </div>
-        <div class="form-group">
-          <label for="name">이름:</label>
-          <input type="text" id="name" v-model="name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">이메일:</label>
-          <input type="email" id="email" v-model="email" required>
-        </div>
-        <div class="form-group">
-          <label for="password">비밀번호:</label>
-          <input type="password" id="password" v-model="password" required>
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">비밀번호 확인:</label>
-          <input type="password" id="confirmPassword" v-model="confirmPassword" required>
-        </div>
-        <div class="form-group">
-          <button type="submit">가입하기</button>
-        </div>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        username: '',
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      };
-    },
-    methods: {
-      submitForm() {
-        // 폼 제출 로직을 여기에 추가합니다.
-        console.log('폼이 제출되었습니다.');
-        console.log('아이디:', this.username);
-        console.log('이름:', this.name);
-        console.log('이메일:', this.email);
-        console.log('비밀번호:', this.password);
-        console.log('비밀번호 확인:', this.confirmPassword);
-      },
-      checkUsername() {
-        // 아이디 중복 확인 로직을 여기에 추가합니다.
-        console.log('아이디 중복 확인');
-        console.log('아이디:', this.username);
-      }
-    }
-  };
-  </script>
-  
-  <style scoped>
-  .signup-form {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: bold;
-  }
+  <div class="signup-form">
+    <h2>회원 가입</h2>
+    <form @submit.prevent="submitForm">
+      <div class="form-group">
+        <label for="username">아이디:</label>
+        <input type="text" id="username" v-model="username" required>
+        <button type="button" class="button-secondary" @click="checkUsername">중복확인</button>
+      </div>
+      <div class="form-group">
+        <label for="email">이메일:</label>
+        <input type="email" id="email" v-model="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" v-model="password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">비밀번호 확인:</label>
+        <input type="password" id="confirmPassword" v-model="confirmPassword" required>
+      </div>
+      <button type="submit" class="button-primary" :disabled="!isUsernameAvailable">가입하기</button>
+      <router-link to="/login" class="login-link">이미 계정이 있으신가요? 로그인</router-link>
+    </form>
+  </div>
+</template>
 
-.input-group input {
-  margin-right: 50px; /* 아이디 입력창과 버튼 사이의 간격 조정 */
+<script>
+export default {
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      isUsernameAvailable: false,
+    };
+  },
+  methods: {
+    submitForm() {
+      // 회원 가입 처리를 위한 코드를 추가합니다.
+      // 실제로는 서버로 사용자 정보를 전송하여 계정을 생성할 수 있습니다.
+      // 이 예시에서는 간단히 콘솔에 사용자 정보를 출력하는 것으로 대체합니다.
+      console.log('아이디:', this.username);
+      console.log('이메일:', this.email);
+      console.log('비밀번호:', this.password);
+      console.log('비밀번호 확인:', this.confirmPassword);
+    },
+    checkUsername() {
+      // 아이디 중복 확인을 위한 코드를 추가합니다.
+      // 실제로는 서버로 아이디를 전송하여 중복 여부를 확인할 수 있습니다.
+      // 이 예시에서는 간단히 아이디가 "test"일 때만 중복되지 않은 것으로 처리합니다.
+      this.isUsernameAvailable = this.username.toLowerCase() !== 'test';
+    },
+  },
+};
+</script>
+
+<style scoped>
+.signup-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  text-align: center;
 }
-  
-  .input-group input[type="text"],
-  .input-group input[type="email"],
-  .input-group input[type="password"] {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #f2f2f2;
-    color: #333;
-    font-size: 16px;
-  }
-  
-  .input-group button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-    font-size: 10px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button-primary {
-    background-color: #007bff;
-  }
-  
-  .button-primary:hover {
-    background-color: #0056b3;
-  }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #f2f2f2;
-    color: #333;
-    font-size: 16px;
-    outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  input[type="password"] {
-    margin-top: 5px;
-  }
-  
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus {
-    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
-  }
-  
-  button:focus {
-    outline: auto;
-  }
-  .button-secondary {
-    text-align: center;
-  padding: 10px 20px;
-  background-color: #eee;
+
+.signup-form h2 {
+  margin-bottom: 20px;
   color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 95%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff;
+}
+
+.button-primary {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  white-space: nowrap; /*텍스트 줄 바꿈 방지*/
-  
 }
 
-.button-secondary br {
-  display: none; /* 줄 바꿈 태그 숨김 */
+.button-primary:hover {
+  background-color: #0056b3;
 }
 
-.button-secondary:hover {
-  background-color: #ccc;
+.login-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+.form-group:nth-of-type(1) input + button {
+  width: 80px;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
 }
 </style>
