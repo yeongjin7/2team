@@ -1,30 +1,39 @@
 <template>
   <div class="signup-form">
-    <h2>회원 가입</h2>
+    <p class="title">회원 가입</p>
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="username">아이디:</label>
         <input type="text" id="username" placeholder="아이디를 입력하세요." v-model="username" required>
         <button type="button" class="button-secondary" @click="checkUsername">중복확인</button>
       </div>
+      
       <div class="form-group">
         <label for="email">이메일:</label>
         <input type="email" id="email" placeholder="이메일를 입력하세요." v-model="email" required>
       </div>
+      
       <div class="form-group">
         <label for="phone">전화번호:</label>
         <input type="phone" id="phone" placeholder="전화번호를 입력하세요." v-model="phone" required>
       </div>
+      
       <div class="form-group">
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="password" required>
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="password" required @input="validatePassword">
       </div>
+      
       <div class="form-group">
         <label for="confirmPassword">비밀번호 확인:</label>
-        <input type="password" id="confirmPassword" placeholder="비밀번호를 확인해 주세요." v-model="confirmPassword" required>
+        <input type="password" id="confirmPassword" placeholder="비밀번호를 확인해 주세요." v-model="confirmPassword" required @input="validateConfirmPassword">
       </div>
-      <button type="submit" class="button-primary" :disabled="!isUsernameAvailable">가입하기</button>
-      <router-link to="/login" class="login-link">이미 계정이 있으신가요? 로그인</router-link>
+      <p v-if="passwordError">{{ passwordError }}</p>
+      <p v-if="confirmPasswordError">{{ confirmPasswordError }}</p>
+
+      <label> <input type="checkbox" v-model="agreeTerms" @change="updateSubmitStatus"> 이용약관 개인정보 수집 및 이용, 마케팅 활동 선택에 모두 동의합니다. </label>
+      
+      <button @click="register" type="submit" class="button-primary" >가입하기</button>
+      <router-link to="/login" class="login-link" >이미 계정이 있으신가요? 로그인</router-link>
     </form>
   </div>
 </template>
@@ -37,7 +46,11 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      passwordError: '',
+      confirmPasswordError: '',
       isUsernameAvailable: false,
+      agreeTerms: false,
+      isSubmitEnabled: false
     };
   },
   methods: {
@@ -57,13 +70,46 @@ export default {
       // 이 예시에서는 간단히 아이디가 "test"일 때만 중복되지 않은 것으로 처리합니다.
       this.isUsernameAvailable = this.username.toLowerCase() !== 'test';
     },
-  },
-};
+    validatePassword() {
+      // Password validation logic
+      if (this.password.length < 8) {
+        this.passwordError = '비밀번호 8자리 이상 입력하세요.';
+      } else {
+        this.passwordError = '';
+      }
+    },
+    validateConfirmPassword() {
+      // Confirm password validation logic
+      if (this.confirmPassword !== this.password) {
+        this.confirmPasswordError = '비밀번호가 일치하지 않습니다.';
+      } else {
+        this.confirmPasswordError = '';
+      }
+    },
+    register() {
+      // Check if passwords match
+      if (this.password === this.confirmPassword && this.password.length >= 8 && this.isSubmitEnabled) {
+        alert("가입을 축하드립니다!");
+        location.href= 'login';
+      }else if (this.password === this.confirmPassword && this.password.length >= 8 !== this.isSubmitEnabled){
+        alert("개인정보 수집에 동의해 주세요.")
+      }else{
+        alert("빈칸을 입력해 주세요")
+      }
+    },
+    updateSubmitStatus() {
+            // 이용약관 체크박스 상태 변경에 따라 가입 완료 버튼 활성/비활성 상태 업데이트
+            this.isSubmitEnabled = this.agreeTerms;
+        },
+      },
+    };
+
+
 </script>
 
 <style scoped>
 .signup-form {
-  max-width: 550px;
+  max-width: 580px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -73,6 +119,12 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   text-align: center;
+}
+
+.title{
+  color : #706e6e;
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .signup-form h2 {
