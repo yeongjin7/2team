@@ -3,8 +3,10 @@
     <div class="container">             
         <section class="travelList">
             <div>
+                
                 <ul class="placeSelect">
-                    <li class="showPlace"><span>장소선택</span></li>
+                    <h3>장소선택</h3>
+                    <li class="showPlace"></li>
                     <div class="submenu">
                         <li><b-button variant="tap active" @click="selectPlace('Place_Seoul')">서울</b-button></li>
                         <li><b-button variant="tap" @click="selectPlace('Place_Busan')">부산</b-button></li>
@@ -28,8 +30,12 @@
         </section>
                
         <section class="travelList-s">
-            <span>경로 담는곳</span>
+            <div class="pathSelect">
+                <h3>경로 담는곳</h3>
+            </div>
+            
             <div class="storePath" v-for="(item, index) in selectedPlaces" :key="index">
+                <BButtonGroup>
                 <span class="imgbox"><img :src="item.imgurl" /></span>
                 <strong v-html="item.name"></strong><br>
                 <span class="textbox" v-html="item.subdec"></span>  
@@ -38,24 +44,39 @@
                 <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708"/>
                 </svg>
                 </button>
+                </BButtonGroup>
             </div>
 
         </section>
 
-        <aside class="map">
-            <span>지도</span>
-        </aside>
+        <!-- <div class="map_wrap"> -->
+            <div id="map"></div>
+            <!-- style="width:50%;height:100%;position:relative;overflow:hidden;" -->
+            <!-- <div id="menu_wrap" class="bg_white">
+                <div class="option">
+                    <div>
+                        <form onsubmit="searchPlaces(); return false;">
+                            키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
+                            <button type="submit">검색하기</button>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+                <ul id="placesList"></ul>
+                <div id="pagination"></div> -->
+        <!-- </div> -->
     </div>
 </template>
 
 <script>
 
-
 export default{
-
+    name: "KakaoMap", // 컴포넌트 이름 지정
     data(){
         
-        return{            
+        return{      
+            map: null,
+            markers: [],      
             Place: [],
             Place_Seoul : [
                 { imgurl: "/images/books_image/book08.jpg", name: "된다! 엑셀 수식 & 함수", subdec: "매일 쓰는 엑셀이 매번 어렵게 느껴지는 건 너무 많은 기능을...", },
@@ -84,6 +105,17 @@ export default{
     created() {
         this.Place = this.Place_it;
     },
+    setup() {},
+    mounted() {
+// api 스크립트 소스 불러오기 및 지도 출력
+    if (window.kakao && window.kakao.maps) {
+      this.loadMap();
+    } else {
+      this.loadScript();
+    }
+  },
+  unmounted() {},
+
     methods: {
         //버튼을 누를 때마다 나오는 데이터 값을 변경
         selectPlace(contents) {
@@ -91,7 +123,7 @@ export default{
             document.querySelector(".active").classList.remove("active");
             event.target.classList.add("active");
 
-            this.selectedPlaces = [];
+            this.selectedPlaces = []; // 데이터 받을 공간 
         },
         //check된 데이터 값을 경로로 이동
         addToSelected(place){
@@ -105,27 +137,82 @@ export default{
         //경로에 있던 데이터 값을 삭제
         deletePlace(index){
             this.selectedPlaces.splice(index, 1);
-        }
+        },
+        // api 불러오기
+        loadScript() {
+            const script = document.createElement("script");
+            script.src =
+            "//dapi.kakao.com/v2/maps/sdk.js?appkey=bb76daf7eebda4a900a718e9508e8360&autoload=false&libraries=services"; 
+            script.onload = () => window.kakao.maps.load(this.loadMap); 
+
+            document.head.appendChild(script);
+        },
+        // 맵 출력하기
+        loadMap() {
+            const container = document.getElementById("map"); 
+            const options = {
+            center: new window.kakao.maps.LatLng(33.450701, 126.570667), 
+            level: 3
+            };
+
+            this.map = new window.kakao.maps.Map(container, options); 
+            this.loadMaker();
+        },
+        // 지정한 위치에 마커 불러오기
+        loadMaker() {
+            const markerPosition = new window.kakao.maps.LatLng(
+            33.450701,
+            126.570667
+            );
+
+            const marker = new window.kakao.maps.Marker({
+            position: markerPosition,
+            });
+
+            marker.setMap(this.map);
+        },
+        // markerMap(){
+        //     const mapContainer = document.getElementById('map');
+        //     const mapOption = {
+        //         center: window.kakao.maps.LatLng(37.566826, 126.9786567),
+        //         level: 3
+        //     }
+        // }
     },
-};
+}
 </script>
 
 <style>
+#map {
+  width: 45%;
+  height: 800px;
+}
+
 .travelList, .travelList-s{
-    width: 30%;
+    width: 20%;
     height: 100%;
     float: left;
     margin-left: 4px;
     border: solid 1px black;
 }
 
-.placeSelect{
+
+.placeSelect {
+    border-bottom: solid 1px black;
+    text-align: center;
+}
+
+.pathSelect{
     border-bottom: solid 1px black;
     text-align: center;
 }
 
 .showPlace{
     border-bottom: solid 1px black;
+}
+
+.storePath{
+    border-bottom: solid 1px black; 
 }
 
 .showPlace img {
@@ -140,8 +227,8 @@ export default{
     float: right;
 }
 
-.map{
-    width: 35%;
+.map_wrap{
+    width: 50%;
     height: 100%;
     float: right;
     margin-left: 4px;
