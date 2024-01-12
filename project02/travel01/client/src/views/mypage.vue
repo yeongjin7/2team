@@ -1,98 +1,105 @@
 <template>
-    <div>
-      <div class="container mt-5">
-        <h3>마이페이지</h3>
-  
-        <div class="card">
-          <div class="card-body">
-            <label for="nameInput">이름</label>
-            <input v-model="user.name" type="text" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
-            
-            <label for="emailInput">아이디</label>
-            <input v-model="user.id" type="text" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
-  
-            <label for="usernameInput">password</label>
-            <input type="password" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
+  <div>
+    <div class="container mt-5">
+      <h3>마이페이지</h3>
 
-            <label for="emailInput">이메일</label>
-            <input v-model="user.email" type="text" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
+      <div class="card">
+        <div class="card-body">
+          <label for="nameInput">이름</label>
+          <input v-model="user.name" type="text" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
+          
+          <label for="emailInput">아이디</label>
+          <input v-model="user.id" type="text" id="emailInput" class="form-control mb-2" :disabled="!editBtn"/>
 
-            <label for="emailInput">아이디</label>
-            <input v-model="user.phone" type="text" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
+          <label for="usernameInput">password</label>
+          <input v-model="user.password" type="password" id="usernameInput" class="form-control mb-2" :disabled="!editBtn"/>
 
-            <label for="emailInput">가입일</label>
-            <input v-model="user.joinDay" type="text" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
-          </div>
-          <div class="divBtn">
-            <b-button variant="outline-primary" @click="getName">수정</b-button>
-          </div>
+          <label for="emailInput">이메일</label>
+          <input v-model="user.email" type="text" id="emailInput" class="form-control mb-2" :disabled="!editBtn"/>
+
+          <label for="phoneInput">전화번호</label>
+          <input v-model="user.phone" type="text" id="phoneInput" class="form-control mb-2" :disabled="!editBtn"/>
+
+          <label for="joinInput">가입일</label>
+          <input v-model="user.joinDay" type="text" id="joinInput" class="form-control mb-2" :disabled="!editBtn"/>
+        </div>
+        <div class="divBtn">
+          <b-button variant="outline-primary" @click="editBtnClick">수정</b-button>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      user: {
+        name: "",
+        id: "",
+        password: "",
+        email: "",
+        phone: "",
+        joinDay: "",
+      },
+      editBtn: false,
+    };
+  },
   
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        user: {
-          name: "",
-          id: "",
-          password: "",
-          email: "",
-          phone: "",
-          joinDay: "",
-        },
-        editBtn: false,
-      };
+  methods: {
+    editBtnClick() {
+      this.editBtn = !this.editBtn;
     },
-    
-    methods: {
-      editBtnClick() {
-        this.editBtn = !this.editBtn;
-      },
-      getName() {
-        axios.get('http://localhost:5005/wawa')
-        .then(res => {
-          console.log(res.data)
-          this.user.name = res.data
-        });         
-        }
-      },
-  };
+    getName() {
+      axios.get('http://localhost:5005/wawa')
+      .then(res => {
+        this.user.name = res.data.name
+        this.user.id = res.data.id
+        this.user.password = res.data.password
+        this.user.email = res.data.email
+        this.user.phone = res.data.phone
+        this.user.joinDay = res.data.joinDay
+      });         
+    }
+  },
 
-  </script>
-  
-  <style scoped>
-  h3 {
-    margin-left: 300px;
-    margin-bottom: 20px;
+  mounted() {
+  this.getName();
   }
-  .card {
-      height: 600px;
-      width: 600px;
-      align-items: center;
-      margin: auto;
-      margin-bottom: 70px;
-      border: 3px solid gray;
-  }
-  .card-body {
-    margin-top: 30px;
-  }
+};
 
-  input {
-    width: 400px;
-  }
+</script>
 
-  .divBtn {
-    padding-bottom: 30px;
-  }
+<style scoped>
+h3 {
+  margin-left: 300px;
+  margin-bottom: 20px;
+}
+.card {
+    height: 600px;
+    width: 600px;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 70px;
+    border: 3px solid gray;
+}
+.card-body {
+  margin-top: 30px;
+}
 
-  .udBtn {
-    color: azure;
-  }
+input {
+  width: 400px;
+}
 
-  </style>
-  
+.divBtn {
+  padding-bottom: 30px;
+}
+
+.udBtn {
+  color: azure;
+}
+
+</style>

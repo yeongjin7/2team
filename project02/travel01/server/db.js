@@ -5,7 +5,7 @@ const pool = mariadb.createPool({
     port: 3306,
     user: 'root', 
     password: '1234',
-    connectionLimit: 5,
+    connectionLimit: 10,
     database:"travel"
   });
 
