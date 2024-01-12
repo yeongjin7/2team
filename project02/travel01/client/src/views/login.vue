@@ -4,11 +4,11 @@
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="username">아이디:</label>
-        <input type="text" id="username" v-model="username" required>
+        <input type="text" id="username" placeholder="아이디를 입력하세요." v-model="username" required>
       </div>
       <div class="form-group">
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" v-model="password" required>
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="password" required>
       </div>
       <button type="submit" class="button-primary">로그인</button>
       <router-link to="/search" class="forgot-password-link">아이디/비밀번호 찾기</router-link>

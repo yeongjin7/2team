@@ -4,20 +4,24 @@
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="username">아이디:</label>
-        <input type="text" id="username" v-model="username" required>
+        <input type="text" id="username" placeholder="아이디를 입력하세요." v-model="username" required>
         <button type="button" class="button-secondary" @click="checkUsername">중복확인</button>
       </div>
       <div class="form-group">
         <label for="email">이메일:</label>
-        <input type="email" id="email" v-model="email" required>
+        <input type="email" id="email" placeholder="이메일를 입력하세요." v-model="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">전화번호:</label>
+        <input type="phone" id="phone" placeholder="전화번호를 입력하세요." v-model="phone" required>
       </div>
       <div class="form-group">
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" v-model="password" required>
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="password" required>
       </div>
       <div class="form-group">
         <label for="confirmPassword">비밀번호 확인:</label>
-        <input type="password" id="confirmPassword" v-model="confirmPassword" required>
+        <input type="password" id="confirmPassword" placeholder="비밀번호를 확인해 주세요." v-model="confirmPassword" required>
       </div>
       <button type="submit" class="button-primary" :disabled="!isUsernameAvailable">가입하기</button>
       <router-link to="/login" class="login-link">이미 계정이 있으신가요? 로그인</router-link>
@@ -43,6 +47,7 @@ export default {
       // 이 예시에서는 간단히 콘솔에 사용자 정보를 출력하는 것으로 대체합니다.
       console.log('아이디:', this.username);
       console.log('이메일:', this.email);
+      console.log('전화번호:', this.phone);
       console.log('비밀번호:', this.password);
       console.log('비밀번호 확인:', this.confirmPassword);
     },
@@ -58,7 +63,7 @@ export default {
 
 <style scoped>
 .signup-form {
-  max-width: 500px;
+  max-width: 550px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -88,7 +93,8 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="phone"] {
   width: 95%;
   padding: 12px;
   margin-bottom: 15px;
