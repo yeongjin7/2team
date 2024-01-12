@@ -30,6 +30,17 @@ app.listen(5005, function() {
 //   })
 // 새로고침 관련
 
+// db랑 연결 되어있는 것 -> 연결 후 mypage.vue에서 get 진행.
+app.get("/main_db", async function(req,res){
+    try{
+        var conn = await pool.getConnection();
+        var rows = await conn.query('SELECT * FROM main'); // 쿼리 실행
+        console.log(rows);
+        res.send(rows)
+    }catch(err){
+        console.log(err)
+    }
+})
 app.get("/wawa", async function(req,res){
     try{
         var conn = await pool.getConnection();
@@ -40,3 +51,4 @@ app.get("/wawa", async function(req,res){
         console.log(err)
     }
 })
+
