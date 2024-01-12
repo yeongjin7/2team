@@ -129,7 +129,7 @@ footer {margin-top: auto;position: relative; background-color: #dcecff; }
 .loginform label { display: block; margin: 20px 0 10px 0; font-weight: 700; color: #676767; font-size: 16px; }
 .form-control { height: 40px; color: #676767; font-size: 14px; }
 .form-control::placeholder { color: #ddd; }
-.btnwrap { margin-top: 10px;}
+.btnwrap { margin-top: 30px;}
 .btn { display: block; width: 100%; height: 40px; line-height: 38px; border-radius: 5px; font-size: 18px; text-align: center; }
 .btn-login { background: #17a2b8; color: #fff; }
 .form-group .d-block { margin-bottom: 10px; font-size: 16px; }
