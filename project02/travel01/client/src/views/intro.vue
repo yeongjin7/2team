@@ -88,7 +88,7 @@ export default {
 }
 
 .introImg {
-    background-image: url(C:\git-work\2team\project02\travel01\client\public\images\travels_image\intro_img.jpg);
+    /* background-image: url(C:\git-work\2team\project02\travel01\client\public\images\travels_image\intro_img.jpg); */
     background-size: cover;
     width: 1224px;
     height: 647px;

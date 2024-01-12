@@ -56,7 +56,7 @@ export default {
     getName() {
       axios.get('http://localhost:5005/wawa')
       .then(res => {
-        this.user.name = res.data.name
+        this.user.name = res.data.name 
         this.user.id = res.data.id
         this.user.password = res.data.password
         this.user.email = res.data.email
