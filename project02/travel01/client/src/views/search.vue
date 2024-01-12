@@ -4,7 +4,7 @@
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="email">이메일 :</label>
-          <input type="email" id="email" v-model="email" required>
+          <input type="email" id="email" placeholder="이메일을 입력하세요." v-model="email" required>
         </div>
         <button type="submit" class="button-primary">찾기</button>
         <router-link to="/login" class="login-link">로그인 페이지로 돌아가기</router-link>
