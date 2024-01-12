@@ -40,6 +40,16 @@ const pageRouter = {
             name: "userBoardCreate",
             component: () => import("@/views/userBoardCreate.vue"),
         },
+        {
+            path: "/login",
+            name: "login",
+            component: () => import("@/views/login.vue"),
+        },
+        {
+            path: "/member",
+            name: "member",
+            component: () => import("@/views/member.vue"),
+        },
     ],
 };
 export default pageRouter;
