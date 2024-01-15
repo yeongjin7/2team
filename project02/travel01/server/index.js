@@ -14,33 +14,15 @@ app.listen(5005, function() {
 // 터미널 server에서 node index.js로 실행
 // lacalhost:5005 로 접속
 
-// app.use( '/', express.static(path.join(__dirname, '../client/dist') ));  
+app.use( '/', express.static(path.join(__dirname, '/dist') ));  
 // 이 부분이 없으면 아래코드에서 index.html을 로드하지 못한다.
-// app.get('/', (req, res)=>{
-//     res.sendFile(path.join(__dirname, '../client/dist/index.html'));  
-// })
+app.get('/', (req, res)=>{
+    res.sendFile(path.join(__dirname, '/dist/index.html'));  
+})
 // 기본 경로 '/'을 통해 빌드된 dist/index.html 파일을 로드시킨다.
 
-// app.get('/*', function(req, res) {
-//     res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
-//       if (err) {
-//         res.status(500).send(err)
-//       }
-//     })
-//   })
-// 새로고침 관련
 
-// db랑 연결 되어있는 것 -> 연결 후 mypage.vue에서 get 진행.
-app.get("/main_db", async function(req,res){
-    try{
-        var conn = await pool.getConnection();
-        var rows = await conn.query('SELECT * FROM main'); // 쿼리 실행
-        console.log(rows);
-        res.send(rows)
-    }catch(err){
-        console.log(err)
-    }
-})
+
 app.get("/wawa", async function(req,res){
     try{
         var conn = await pool.getConnection();
@@ -52,3 +34,28 @@ app.get("/wawa", async function(req,res){
     }
 })
 
+// app.get("/wawa2", async function(req,res){
+//     try{
+//         console.log("야호애ㅑ호");
+//         var conn = await pool.getConnection();
+//         var testtest = res.body;
+//         console.log(res.body);
+//         res.send(testtest);
+//         // var rows = await conn.query("UPDATE `user` SET `name`= ?  WHERE `userNo`=1;"); // 쿼리 실행
+        
+//         // console.log(rows[0].name);
+//         //  var rows = await conn.query("UPDATE `user` SET `name`=" + nameToUpdate + "WHERE `userNo`=1;"); // 쿼리 실행
+//     }catch(err){
+//         console.log(err)
+//     }
+// })
+
+
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '/dist/index.html'), function(err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  })
+// 새로고침시 오류나는거 해결 코드, 맨 밑에 위치 해야되는듯?
