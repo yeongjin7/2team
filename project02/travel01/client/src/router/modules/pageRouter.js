@@ -55,6 +55,11 @@ const pageRouter = {
             name: "search",
             component: () => import("@/views/search.vue"),
         },
+        {
+            path: "/KaKaoMap",
+            name: "KaKaoMap",
+            component: () => import("@/views/KaKaoMap.vue"),
+        },
     ],
 };
 export default pageRouter;

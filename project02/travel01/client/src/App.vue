@@ -1,17 +1,17 @@
 <template>
   <div id="appPage">
   <router-view/>
-  <kakaoMap />
+  <KaKaoMap />
   </div>
 </template>
 
-<script>
-import userBoardCreate from "./views/userBoardCreate.vue"
+<!-- <script>
+import KaKaoMap from "./views/KaKaoMap.vue"
 
 export default{
   name: "App",
   components: {
-    userBoardCreate,
+    KaKaoMap,
   },
 };
-</script>
+</script> -->
