@@ -46,27 +46,27 @@ export default{
           BoardInfo: [
             {
               title: "1번째 게시물",
-              imgUrl: require("C:/git-work/miniproject2/2team/project02/travel01/client/public/images/books_image/book02.jpg")
+              imgUrl: ("/images/books_image/book02.jpg")
             },
             {
               title: "2번째 게시물",
-              imgUrl: require("C:/git-work/miniproject2/2team/project02/travel01/client/public/images/books_image/book03.jpg")
+              imgUrl: ("/images/books_image/book03.jpg")
             },
             {
               title: "3번째 게시물",
-              imgUrl: require("C:/git-work/miniproject2/2team/project02/travel01/client/public/images/books_image/book04.jpg")
+              imgUrl: ("/images/books_image/book04.jpg")
             },
             {
               title: "4번째 게시물",
-              imgUrl: require("C:/git-work/miniproject2/2team/project02/travel01/client/public/images/books_image/book05.jpg")
+              imgUrl: ("/images/books_image/book05.jpg")
             },
             {
               title: "5번째 게시물",
-              imgUrl: require("C:/git-work/miniproject2/2team/project02/travel01/client/public/images/books_image/book06.jpg")
+              imgUrl: ("/images/books_image/book06.jpg")
             },
             {
               title: "6번째 게시물",
-              imgUrl: require("C:/git-work/miniproject2/2team/project02/travel01/client/public/images/books_image/book07.jpg")
+              imgUrl: ("/images/books_image/book07.jpg")
             },
           ],
         }
