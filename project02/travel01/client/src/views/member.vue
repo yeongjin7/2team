@@ -2,31 +2,40 @@
   <div class="signup-form">
     <p class="title">회원 가입</p>
     <form @submit.prevent="submitForm">
+
       <div class="form-group">
-        <label for="username">아이디:</label>
-        <input type="text" id="username" placeholder="아이디를 입력하세요." v-model="username" required>
+        <label for="name">이름:</label>
+        <input type="text" id="name" placeholder="이름을 입력하세요." v-model="user.name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="id">아이디:</label>
+        <input type="text" id="id" placeholder="아이디를 입력하세요." v-model="user.id" required>
         <button type="button" class="button-secondary" @click="checkUsername">중복확인</button>
       </div>
-      
-      <div class="form-group">
-        <label for="email">이메일:</label>
-        <input type="email" id="email" placeholder="이메일를 입력하세요." v-model="email" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="phone">전화번호:</label>
-        <input type="phone" id="phone" placeholder="전화번호를 입력하세요." v-model="phone" required>
-      </div>
-      
+
       <div class="form-group">
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="password" required @input="validatePassword">
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="user.password" required @input="validatePassword">
       </div>
       
       <div class="form-group">
         <label for="confirmPassword">비밀번호 확인:</label>
         <input type="password" id="confirmPassword" placeholder="비밀번호를 확인해 주세요." v-model="confirmPassword" required @input="validateConfirmPassword">
       </div>
+
+      <div class="form-group">
+        <label for="phone">전화번호:</label>
+        <input type="phone" id="phone" placeholder="전화번호를 입력하세요." v-model="user.phone" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">이메일:</label>
+        <input type="email" id="email" placeholder="이메일를 입력하세요." v-model="user.email" required>
+      </div>
+          
+      
+
       <p v-if="passwordError">{{ passwordError }}</p>
       <p v-if="confirmPasswordError">{{ confirmPasswordError }}</p>
 
@@ -39,12 +48,17 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
-      username: '',
-      email: '',
-      password: '',
+      user:{
+        name: '',
+        id: '',
+        email: '',
+        phone: '',
+        password: '',
+    },
       confirmPassword: '',
       passwordError: '',
       confirmPasswordError: '',
@@ -72,7 +86,7 @@ export default {
     },
     validatePassword() {
       // Password validation logic
-      if (this.password.length < 8) {
+      if (this.user.password.length < 8) {
         this.passwordError = '비밀번호 8자리 이상 입력하세요.';
       } else {
         this.passwordError = '';
@@ -80,7 +94,7 @@ export default {
     },
     validateConfirmPassword() {
       // Confirm password validation logic
-      if (this.confirmPassword !== this.password) {
+      if (this.confirmPassword !== this.user.password) {
         this.confirmPasswordError = '비밀번호가 일치하지 않습니다.';
       } else {
         this.confirmPasswordError = '';
@@ -88,10 +102,18 @@ export default {
     },
     register() {
       // Check if passwords match
-      if (this.password === this.confirmPassword && this.password.length >= 8 && this.isSubmitEnabled) {
-        alert("가입을 축하드립니다!");
-        location.href= 'login';
-      }else if (this.password === this.confirmPassword && this.password.length >= 8 !== this.isSubmitEnabled){
+      if (this.user.password === this.confirmPassword && this.user.password.length >= 8 && this.isSubmitEnabled) {
+        axios.post('http://localhost:5005/member', { member : this.user })
+        .then((res)=>{
+          if(res.data.success){
+            alert("가입을 축하드립니다!");
+            location.href= 'login';
+          }else {
+            alert('가입 실패');
+          }
+			});
+
+      }else if (this.user.password === this.confirmPassword && this.user.password.length >= 8 !== this.isSubmitEnabled){
         alert("개인정보 수집에 동의해 주세요.")
       }else{
         alert("빈칸을 입력해 주세요")
