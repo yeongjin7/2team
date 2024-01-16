@@ -6,12 +6,12 @@
       <div class="card">
         <div class="card-body">
           <label for="nameInput">이름</label>
-          <input v-model="user.name" type="text" id="nameInput" class="form-control mb-2" :disabled="!editBtn"/>
+          <input v-model="user.name" type="text" id="nameInput" class="form-control mb-2" disabled/>
           
           <label for="emailInput">아이디</label>
-          <input v-model="user.id" type="text" id="emailInput" class="form-control mb-2" :disabled="!editBtn"/>
+          <input v-model="user.id" type="text" id="emailInput" class="form-control mb-2" disabled/>
 
-          <label for="usernameInput">password</label>
+          <label for="usernameInput">비밀번호</label>
           <input v-model="user.password" type="password" id="usernameInput" class="form-control mb-2" :disabled="!editBtn"/>
 
           <label for="emailInput">이메일</label>
@@ -21,11 +21,10 @@
           <input v-model="user.phone" type="text" id="phoneInput" class="form-control mb-2" :disabled="!editBtn"/>
 
           <label for="joinInput">가입일</label>
-          <input v-model="user.joinDay" type="text" id="joinInput" class="form-control mb-2" :disabled="!editBtn"/>
+          <input v-model="user.joinDay" type="text" id="joinInput" class="form-control mb-2" disabled/>
         </div>
         <div class="divBtn">
-          <b-button variant="outline-primary" @click="editBtnClick" id="editBtncg">수정</b-button>
-          <b-button variant="outline-primary" @click="saveUser" id="editBtncg2">저장</b-button>
+          <b-button variant="outline-primary" @click="editBtnClick" id="editBtncg">{{ editBtn ? '저장' : '수정' }}</b-button>
         </div>
       </div>
     </div>
@@ -38,50 +37,37 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      user: {
-        name: "",
-        id: "",
-        password: "",
-        email: "",
-        phone: "",
-        joinDay: "",
-      },
-      user2 : "",
-      user3 : null,
+      user: [],
       editBtn: false,
     };
   },
   
   methods: {
     editBtnClick() {
-      document.querySelector("#editBtncg").innerHTML = "<b-button variant='outline-primary' @click='editBtnClickResult' id='resultBtncg'>확인</b-button>";
-      this.editBtn = !this.editBtn;
-      
+      if (this.editBtn) {
+        this.updateUser();
+      } else {
+        this.editBtn = !this.editBtn;
+      }
     },
-
-
     getName() {
-      axios.get('http://localhost:5005/wawa')
+      axios.get('http://localhost:5005/mypage')
       .then(res => {
-        // this.user2 = JSON.stringify(res);
-        // this.user3 = JSON.parse(this.user2)
-        // console.log(this.user3.data);
-        this.user.name = res.data.name
-        this.user.id = res.data.id
-        this.user.password = res.data.password
-        this.user.email = res.data.email
-        this.user.phone = res.data.phone
-        this.user.joinDay = res.data.joinDay
+        console.log(res.data);
+        this.user = res.data ;
       });         
     },
-    // saveUser() {
-    //   axios.put('http://localhost:5005/wawa', { name: this.user.name })
-    //     .then((res)=>{
-    //       console.log(res.body);
-    //       console.log('서버 응답:', res.data);
-    //       alert('데이터가 성공적으로 업데이트되었습니다.');
-		// 	})
-    // }
+    updateUser() {
+      axios.put('http://localhost:5005/mypage/edituser', { user: this.user })
+        .then((res)=>{
+          if(res.data.success){
+            alert('정보 변경이 완료되었습니다.');
+          }else {
+            alert('정보 변경이 실패되었습니다.');
+          }
+			});
+      this.editBtn = !this.editBtn;
+    }
   },
 
   mounted() {
@@ -102,7 +88,7 @@ h3 {
     align-items: center;
     margin: auto;
     margin-bottom: 70px;
-    border: 3px solid gray;
+    border: 2px solid rgb(169, 203, 255);
 }
 .card-body {
   margin-top: 30px;
