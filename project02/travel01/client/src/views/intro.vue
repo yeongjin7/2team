@@ -1,52 +1,41 @@
 <template>
-    <section>
-        
-        <section class = "introMain">
+    <section class = "introcontent">
+        <div class = "introMain">
             <h1>Travel01은</h1><br>
             <strong class = "introDt1">여행 계획을 짜는 것이 두려운 사람들을 위한,<br>
             본인의 여행을 많은 사람들과 공유하고 싶은 사람들에 의한</strong>
             <h4 class = "introDt2">"여행 일정을 공유하고 소통하는 페이지" 입니다.</h4>
-        </section>
-
-        <section>
-            <div class = "introImg">
-                <div class = "overlay">
-                    <div class = "overlaytxt">여행 계획을 짜는 게 어렵고 막막하다고요?</div>
-                </div>
+        </div>
+        <div class = "introImg">
+            <div class = "overlay">
+                <div class = "overlaytxt">여행 계획을 짜는 게 어렵고 막막하다고요?</div>
             </div>
-        </section>
-
-        <section class = "introMain">
+        </div>
+        <div class = "introMain">
             <h2>이제는 걱정하지 마세요.<br><br>이곳은 여행을 사랑하는 사람들이 모여있는 곳이니까요.</h2>
-        </section>
-
+        </div>
         <section class = "introPic">
             <div>
                 <img class="room-img" :src="imgSrc[0]" alt="image" />
             </div>
+            <div>
                 <h2 class = "introMain">다른 사람들이 올린 여행 일정을 보며<br>
                 나에게 맞는 일정을 즐겨찾기 해보세요!</h2>
-        </section>
-
-        <section class = "introMain">
-            <h2>즐겨찾기한 일정을 수정하여<br>
-            나만의 일정으로 만들 수 있습니다.</h2>
-        </section>
-
-
-        <section class = "introPic">
-            <div>
-                <!--일정 수정하는 사진이 들어갈 자리 입니다.-->
-                <!--원하는 사진을 client/public/images/travels_image에 넣어주세요-->
-                <img class="room-img" :src="imgSrc[0]" alt="image" />
             </div>
         </section>
-
-        <section>
-            <h2 class = "introMain">이제 당신이 여행을 떠나실 차례입니다.</h2>
+        <div class = "introMain">
+            <h2>즐겨찾기한 일정을 수정하여<br>
+            나만의 일정으로 만들 수 있습니다.</h2>
+        </div>
+        <div class = "introPic">
+            <!--일정 수정하는 사진이 들어갈 자리 입니다.-->
+            <!--원하는 사진을 client/public/images/travels_image에 넣어주세요-->
+            <img class="room-img" :src="imgSrc[0]" alt="image" />
+        </div>
+        <div>
+            <h2 class = "introMainE">이제 당신이 여행을 떠나실 차례입니다.</h2>
             <router-link :to="{ path: 'myTravel' }" class="custom-link" data-text="나만의 일정 만들기"></router-link>
-        </section>
-    
+        </div>
     </section>
 </template>
 
@@ -74,6 +63,13 @@ export default {
     color: #272727;
     margin-top: 110px;
     margin-bottom: 110px;
+    margin-left: 45px;
+}
+.introMainE{
+    text-align: center; 
+    color: #272727;
+    margin-top: 110px;
+    margin-bottom: 30px;
     margin-left: 45px;
 }
 .introDt1 {
