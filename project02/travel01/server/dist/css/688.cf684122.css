@@ -1,0 +1,1 @@
+#map{width:80%;height:500px;float:right}.map-area,.seachBox{display:flex}.seachBox{border-bottom:1px solid #000;position:relative;top:0;left:0;height:600px;z-index:10000;background-color:#ffffffaa;width:300px;flex-direction:column}.seachBox span{font-size:10px}
