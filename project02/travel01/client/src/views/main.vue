@@ -47,7 +47,7 @@
 <!--                  <span class="imgbox"><img :src="item.img" /></span>-->
 <!--                  <strong v-html="main.name"></strong>-->
 <!--                  &lt;!&ndash;<span class="textbox" v-html="item.subdec"></span>&ndash;&gt;-->
-<!--                </div>-->s
+<!--                </div>-->
                   <h4>{{main.name}}{{main.img}}</h4>
             </div>
         </section>
