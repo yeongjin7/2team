@@ -24,7 +24,8 @@
           <input v-model="user.joinDay" type="text" id="joinInput" class="form-control mb-2" :disabled="!editBtn"/>
         </div>
         <div class="divBtn">
-          <b-button variant="outline-primary" @click="editBtnClick">수정</b-button>
+          <b-button variant="outline-primary" @click="editBtnClick" id="editBtncg">수정</b-button>
+          <b-button variant="outline-primary" @click="saveUser" id="editBtncg2">저장</b-button>
         </div>
       </div>
     </div>
@@ -45,17 +46,26 @@ export default {
         phone: "",
         joinDay: "",
       },
+      user2 : "",
+      user3 : null,
       editBtn: false,
     };
   },
   
   methods: {
     editBtnClick() {
+      document.querySelector("#editBtncg").innerHTML = "<b-button variant='outline-primary' @click='editBtnClickResult' id='resultBtncg'>확인</b-button>";
       this.editBtn = !this.editBtn;
+      
     },
+
+
     getName() {
       axios.get('http://localhost:5005/wawa')
       .then(res => {
+        // this.user2 = JSON.stringify(res);
+        // this.user3 = JSON.parse(this.user2)
+        // console.log(this.user3.data);
         this.user.name = res.data.name
         this.user.id = res.data.id
         this.user.password = res.data.password
@@ -63,7 +73,15 @@ export default {
         this.user.phone = res.data.phone
         this.user.joinDay = res.data.joinDay
       });         
-    }
+    },
+    // saveUser() {
+    //   axios.put('http://localhost:5005/wawa', { name: this.user.name })
+    //     .then((res)=>{
+    //       console.log(res.body);
+    //       console.log('서버 응답:', res.data);
+    //       alert('데이터가 성공적으로 업데이트되었습니다.');
+		// 	})
+    // }
   },
 
   mounted() {

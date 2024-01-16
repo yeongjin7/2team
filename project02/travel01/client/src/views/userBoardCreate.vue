@@ -6,9 +6,15 @@
                     <input type="text" v-model="search.keyword" @keyup.enter="searchPlaces" />
                 </div>
             </div>
-            <KaKaoMap class="kmap" :options="mapOption" />
+            <KaKaoMap ref="kakaoMap" class="kmap" 
+            :latitude="37.39843974939604" :longitude="127.10972941510465"
+            :options="mapOption" />
         </div>
-        <div class="place" v-for="result in search.results" :key="result.id" @click="showPlace(result)">
+        <div class="place" 
+        v-for="result in search.results" 
+        :key="result.id" 
+        @click="showPlace(result)"
+        >
         <span>{{ result.place_name }}</span>
         <div class="addr">{{ result.address_name }}</div>
     </div>
@@ -26,19 +32,23 @@ export default{
     // name: "KakaoMap", // 컴포넌트 이름 지정
     data(){
         return{
+            map: [],
+            marker:[],
             mapOption:{
                 center:{
-                    lat:"",                    
-                    lng:"",
+                    latitude:'',                    
+                    longitude:'',
                 },
                 level: 8,
             },
+            // harbors: [],
+            // markers: null,
             search:{
                 keyword: '',
                 pgn: null,
                 results: [],
             },
-            selectedPlace: null,
+            markers: [],
         };
     },
 
@@ -61,89 +71,54 @@ export default{
                 this.search.results = data;
             });
         },
-        // showOnMap(harbor){
-        //     this.mapOption.center = {
-        //         lat: harbor.lat,
-        //         lng: harbor.lng,
-        //     };
-        // },
+        showOnMap(harbor){
+            this.mapOption.center = {
+                lat: harbor.lat,
+                lng: harbor.lng,
+            };
+        },
         showPlace(place){
              console.log(place)
-            
-        if(place && place.y && place.x){
-            this.mapOption.center = {
+             this.mapOption.center = {
                 lat: place.y,
                 lng: place.x,
-                }
-            }
+             }
+             this.createMarker(place.y, place.x, place.place_name);
+        },
+       
+        createMarker(lat, lng, title) {
+            console.log("Marker data:", this.markerData);
+            const marker = new window.kakao.maps.Marker({
+                position: new window.kakao.maps.LatLng(lat, lng),
+                title: title,
+            });
+            this.$nextTick(() => {
+            marker.setMap(this.$refs.kakaoMap.map);
+            });
+            this.markers.push(marker);
         },
     },
 }
 </script>
 
 <style>
-/* #map {
-  width: 80%;
-  height: 800px;
-  float: right;
-} */
-.container{
-    height: 100%;
+.map-area{
+    display: flex;
+    
 }
-
-.place {
-float: left;
-}
-.place h4{
-    float: left;
-
-}
-
-.travelList, .travelList-s{
-    width: 20%;
-    height: 100%;
-    float: left;
-    margin-left: 4px;
-    border: solid 1px black;
-}
-
-
-.placeSelect {
+.seachBox{
     border-bottom: solid 1px black;
-    text-align: center;
+    position: relative;
+    top: 0;
+    left: 0%;
+    height:600px;
+    z-index: 10000;
+    background-color: #ffffffaa;
+    width:300px;
+    display: flex;
+    flex-direction: column;
 }
-
-.pathSelect{
-    border-bottom: solid 1px black;
-    text-align: center;
+.seachBox span{
+    font-size: 10px;
 }
-
-.showPlace{
-    border-bottom: solid 1px black;
-}
-
-.storePath{
-    border-bottom: solid 1px black; 
-}
-
-.showPlace img {
-    width: 100px;
-}
-
-.storePath img{
-    width: 100px;
-}
-
-.deleteBtn{
-    float: right;
-}
-
-.map_wrap{
-    width: 100%;
-    height: 100%;
-    float: right;
-    margin-left: 4px;
-    border: solid 1px black;
-}
-
 </style>
