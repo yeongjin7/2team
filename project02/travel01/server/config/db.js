@@ -1,13 +1,14 @@
 const mariadb = require('mariadb');
 
 const db = mariadb.createPool({
-    host: 'localhost', 
+    host: '54.180.223.144', 
     // port: 3306,
-    user: 'root', 
+    user: 'yoo', 
     password: '1234',
     connectionLimit: 10,
     database:"travel"
   });
+
 
 
 // db 연결 끊어지면 자동 재시작 코드 (필요할때 써보자)
