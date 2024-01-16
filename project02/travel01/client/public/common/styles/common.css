@@ -60,7 +60,7 @@ i, em, address{font-style:normal}
 label, button{cursor:pointer}
 blockquote, q {quotes:none}
 caption, legend {overflow:hidden;visibility:hidden;position:absolute;width:0;height:0;padding:0;margin:0;font-size:0;text-indent:-100%;white-space:nowrap;z-index:-1}
-header, footer, section, article, aside, nav, hgroup, details, menu, figure, figcaption {display:block;box-sizing: border-box;}
+
 input, textarea, select, button {font-family:'NotoL','Malgun Gothic','맑은고딕','돋움',dotum, sans-serif;font-size:12px;color:#474747;line-height:1.5;letter-spacing:0;vertical-align:middle; background:none; border:none;}
 input, textarea {margin:0;padding:0}
 input[type="text"],input[type="email"],input[type="phone"],input[type="password"]{padding:0 10px;}
@@ -87,7 +87,7 @@ nav ul > li { flex: 1; text-align: center; }
 nav ul > li > button { color: #fff; font-size: 18px; font-weight: 700; }
 header { position: relative; z-index: 9999; background-color: #dcecff;}
 #wrap { display: flex;flex-direction: column; height: 100%; }
-footer {margin-top: auto;position: relative; background-color: #dcecff; }
+
 .botinfo {width: 100%;height: 50px;padding: 10px 0;background: #5581E6; border-top: solid 1px #ddd; border-bottom: solid 1px #ddd;}
 .botbtngroup { max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 20px;display: flex;justify-content: flex-end;align-items: center; }
 .btn-text { padding: 0 10px; position: relative;}
@@ -95,10 +95,8 @@ footer {margin-top: auto;position: relative; background-color: #dcecff; }
 .btn-text:nth-of-type(1) { padding-left: 0; } 
 .btn-text:nth-of-type(1)::before { display: none; }
 .btn-gray { height: 29px; padding: 0 10px; margin-left: 10px; background-color: #606060; color: #fff; }
-.footerinfo { max-width: 1200px; width: 100%; margin: 0 auto; padding: 20px;display: flex; align-items: center; }
-.footer-logo, .footer-sub { position: relative; z-index: 3; }
-.footer-logo img { width: 65px; }
-.footer-sub { flex: 1; padding-left: 20px; font-size: 12px; }
+
+
 @media screen and (max-width: 1024px) {
      .system > button { width: 25px; height: 25px; font-size: 0; }
      .system > button::before { display: none; }
@@ -111,14 +109,11 @@ footer {margin-top: auto;position: relative; background-color: #dcecff; }
      nav ul > li > button { font-size: 15px; }
      .botinfo { height: auto; padding: 0 30px; }
      .botbtngroup { flex-wrap: wrap; justify-content: center; padding: 10px 0; }
-     .footerinfo { position: relative; }
-     .footerinfo::before { top: 0; }
+ 
      .btn-text { width: 33%; margin-bottom: 10px; font-size: 11px; }
      .btn-gray { min-width: 75px; height: 24px; font-size: 11px; }
      .btn-text + .btn-gray { margin-left: 0; }
-     .footer-logo img { width: 85px; }
-     .footer-logo { align-self: flex-start; padding-top: 4px; }
-     .footer-info address span { display: block; }
+  
 }
 /* 8장 로그인/회원가입 대화 상자 만들기 */
 .modal-open #appPage { z-index: 9; position: relative; }
@@ -282,3 +277,34 @@ footer {margin-top: auto;position: relative; background-color: #dcecff; }
 .maintit span {
      color: white;
 }
+
+header, footer, section, article, aside, nav, hgroup, details, menu, figure, figcaption {display:block;box-sizing: border-box;}
+
+footer {
+     margin-top: auto;
+     position: relative;
+     background-color: #dcecff;
+     height: auto;
+     text-align: center;
+     line-height: 5px;
+}
+
+.footerinfo {
+     max-width: 1200px;
+     width: 100%;
+     margin: 0 auto;
+     padding-top: 12px;
+     display: flex;
+     align-items: end;
+}
+
+.footer-logo, .footer-sub { position: relative; z-index: 3; }
+.footer-logo img { width: 65px; }
+.footer-sub { flex: 1; padding-left: 20px; font-size: 12px; }
+
+.footerinfo { position: relative; }
+.footerinfo::before { top: 0; }
+
+.footer-logo img { width: 85px; }
+.footer-logo { align-self: flex-start; padding-top: 4px; }
+.footer-info address span { display: block; }
