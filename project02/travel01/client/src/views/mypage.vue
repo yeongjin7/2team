@@ -27,6 +27,9 @@
           <b-button variant="outline-primary" @click="editBtnClick" id="editBtncg">{{ editBtn ? '저장' : '수정' }}</b-button>
         </div>
       </div>
+        <input type="text" v-model="login.id" placeholder="임시 로그인 아이디"/>
+        <input type="text" v-model="login.password" placeholder="임시 로그인 비번"/>
+        <b-button @click="loginBtn">임시 로그인</b-button>
     </div>
   </div>
 </template>
@@ -38,6 +41,10 @@ export default {
   data() {
     return {
       user: [],
+      login: {
+        id: '',
+        password: '',
+      },
       editBtn: false,
     };
   },
@@ -51,7 +58,7 @@ export default {
       }
     },
     getName() {
-      axios.get('http://localhost:5005/mypage')
+      axios.get('http://localhost:5005/mypage', { withCredentials: true })
       .then(res => {
         console.log(res.data);
         this.user = res.data ;
@@ -67,7 +74,18 @@ export default {
           }
 			});
       this.editBtn = !this.editBtn;
-    }
+    },
+    loginBtn(){
+      axios.post('http://localhost:5005/logintest', { login: this.login }, { withCredentials: true })
+      .then((res)=>{
+        if(res.data.success){
+          alert("로그인 성공임");
+          this.$router.push("/");
+        }else{
+          alert("로그인 실패임")
+        }
+      })
+    },
   },
 
   mounted() {
