@@ -20,6 +20,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 
 import axios from "axios";
 
@@ -45,6 +46,41 @@ export default {
            });
     },
     goMade(target) {
+=======
+export default{
+      data() {
+        return {
+          BoardInfo: [
+            {
+              title: "1번째 게시물",
+              imgUrl: ("/images/books_image/book02.jpg")
+            },
+            {
+              title: "2번째 게시물",
+              imgUrl: ("/images/books_image/book03.jpg")
+            },
+            {
+              title: "3번째 게시물",
+              imgUrl: ("/images/books_image/book04.jpg")
+            },
+            {
+              title: "4번째 게시물",
+              imgUrl: ("/images/books_image/book05.jpg")
+            },
+            {
+              title: "5번째 게시물",
+              imgUrl: ("/images/books_image/book06.jpg")
+            },
+            {
+              title: "6번째 게시물",
+              imgUrl: ("/images/books_image/book07.jpg")
+            },
+          ],
+        }
+      },
+      methods: {
+      goMade(target) {
+>>>>>>> 130aa85c17aa570640e6aaec02d06b0a77836f20
           if (this.$router.currentRoute.path !== target) {
               this.$router.push(target);
           }
