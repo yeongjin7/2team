@@ -5,7 +5,7 @@
 
       <div class="form-group">
         <label for="name">이름:</label>
-        <input type="text" id="name" placeholder="이름을 입력하세요." v-model="user.name" required>
+        <input type="name" id="name" placeholder="이름을 입력하세요." v-model="user.name" required>
       </div>
 
       <div class="form-group">
@@ -64,7 +64,8 @@ export default {
       confirmPasswordError: '',
       isUsernameAvailable: false,
       agreeTerms: false,
-      isSubmitEnabled: false
+      isSubmitEnabled: false,
+      successfindid: false,
     };
   },
   methods: {
@@ -72,17 +73,29 @@ export default {
       // 회원 가입 처리를 위한 코드를 추가합니다.
       // 실제로는 서버로 사용자 정보를 전송하여 계정을 생성할 수 있습니다.
       // 이 예시에서는 간단히 콘솔에 사용자 정보를 출력하는 것으로 대체합니다.
-      console.log('아이디:', this.username);
+      console.log('아이디:', this.id);
       console.log('이메일:', this.email);
       console.log('전화번호:', this.phone);
       console.log('비밀번호:', this.password);
       console.log('비밀번호 확인:', this.confirmPassword);
     },
+    
+    //사용자가 입력한 아이디를 DB에 보내고, 사용자가 보낸 아이디가 DB에 없으면 
+    //사용 가능한 ID 알림창을 생성 그게 아니면 중복된 아이디 알림창 생성
     checkUsername() {
-      // 아이디 중복 확인을 위한 코드를 추가합니다.
-      // 실제로는 서버로 아이디를 전송하여 중복 여부를 확인할 수 있습니다.
-      // 이 예시에서는 간단히 아이디가 "test"일 때만 중복되지 않은 것으로 처리합니다.
-      this.isUsernameAvailable = this.username.toLowerCase() !== 'test';
+      // Check if passwords match
+      //router와 연결이 있음
+        axios.post('http://localhost:5005/checkUsername', { member : this.user.id })
+        .then((res)=>{
+          //success가 true면 사용 가능한 ID
+          if(res.data.success){
+            alert('사용 가능한 ID입니다.');
+            this.successfindid = true;
+          }else {
+            alert('중복된 아이디 입니다.');
+            
+          }
+        });
     },
     validatePassword() {
       // Password validation logic
@@ -92,6 +105,7 @@ export default {
         this.passwordError = '';
       }
     },
+    
     validateConfirmPassword() {
       // Confirm password validation logic
       if (this.confirmPassword !== this.user.password) {
@@ -100,33 +114,36 @@ export default {
         this.confirmPasswordError = '';
       }
     },
+      
     register() {
       // Check if passwords match
-      if (this.user.password === this.confirmPassword && this.user.password.length >= 8 && this.isSubmitEnabled) {
+      if (this.user.password === this.confirmPassword && this.user.password.length >= 8 && this.isSubmitEnabled && this.successfindid) {
         axios.post('http://localhost:5005/member', { member : this.user })
         .then((res)=>{
           if(res.data.success){
             alert("가입을 축하드립니다!");
-            location.href= 'login';
+            this.$router.push('/login');
           }else {
             alert('가입 실패');
           }
-			});
+		});
 
       }else if (this.user.password === this.confirmPassword && this.user.password.length >= 8 !== this.isSubmitEnabled){
         alert("개인정보 수집에 동의해 주세요.")
+      }else if(!this.successfindid){
+        alert("아이디 중복체크를 해주세요")
+      }else if(this.user.password !== this.confirmPassword){
+        alert("비밀번호가 일치하지 않습니다.")
       }else{
         alert("빈칸을 입력해 주세요")
       }
-    },
+     },
     updateSubmitStatus() {
-            // 이용약관 체크박스 상태 변경에 따라 가입 완료 버튼 활성/비활성 상태 업데이트
-            this.isSubmitEnabled = this.agreeTerms;
-        },
-      },
-    };
-
-
+        // 이용약관 체크박스 상태 변경에 따라 가입 완료 버튼 활성/비활성 상태 업데이트
+        this.isSubmitEnabled = this.agreeTerms;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -140,13 +157,14 @@ export default {
   margin-bottom: 50px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .title{
   color : #706e6e;
   font-size: 30px;
   font-weight: bold;
+  text-align: center;
 }
 
 .signup-form h2 {
@@ -165,10 +183,19 @@ label {
   color: #555;
 }
 
-input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="phone"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="name"]{
   width: 95%;
   padding: 12px;
   margin-bottom: 15px;
@@ -178,10 +205,15 @@ input[type="phone"] {
   transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
-  border-color: #007bff;
+input[type="text"]{
+  width: 80%;
+  padding: 12px;
+  margin-bottom: 15px;
+  margin-left: 0%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
 .button-primary {
@@ -219,6 +251,21 @@ input[type="password"]:focus {
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.button-secondary{
+  width: 100px;
+  height: 2%;
+  padding: 12px;
+  margin-left: 5px;
+  margin-bottom: 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
   transition: background-color 0.3s ease;
 }
 </style>
