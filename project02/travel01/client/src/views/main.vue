@@ -44,18 +44,12 @@
           <!--                <b-button variant="tap" @click="AddContents('Newbooks_science')">공지사항</b-button>-->
         </div>
         <div>
-<!--        <div class="rollimg" v-for="(item, index) in board" :key="index">-->
-<!--          <span class="imgbox"><img :src="item.img" /></span>-->
-<!--          <strong v-html="board.title"></strong>-->
-          <!--<span class="textbox" v-html="item.subdec"></span>-->
-          <div class = "rolling">
-            <div v-for = "main in Board" :key = "main">
-              <img class = "BoardImg" :src="board.img" />
-              <h4 class = "BoardTitle">{{ board.title }}</h4>
+            <div class = "rollimg" v-for="(item, boardNo) in board" :key="boardNo">
+              <img class = "BoardImg" :src="item.boardImg" />
+              <h4 class = "BoardTitle">{{ item.title }}</h4>
             </div>
           </div>
         </div>
-      </div>
     </section>
     <!-- 도서 검색 -->
 
@@ -75,10 +69,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      board: {
-        title: "",
-        // img : "",
-      },
+      board: [],
       hashdata: [
         { text: "서울", value: "서울" },
         { text: "부산", value: "부산" },
@@ -95,42 +86,14 @@ export default {
       ],
     };
   },
-  // created() {
-  //     axios.get('/some-endpoint')
-  //         .then(response => console.log(response));
-  // },
-
   methods: {
     getName() { // 해당경로의 내용을 axios로 연결하여 get하겠다. // 8080;
       axios.get('http://localhost:5005/main')
           .then((res) => {
-            console.log("여기란다!");
-              // 응답 데이터가 존재하고 img와 title이 존재할 때에만 할당
-              // this.board.img = res.data.img;
-              this.board.title = res.data.title;
-              console.log(this.board.title);
+              this.board = res.data;
+              console.log(this.board); // board의 정보를 받겠다
           })
     },
-
-    // AddContents(contents) {
-    //     this.Newbooks = this[contents];
-    //     document.querySelector(".active").classList.remove("active");
-    //     event.target.classList.add("active");
-    // },
-    // gotoPage(url) {
-    //     if (url == "/notice") {
-    //         this.$router.push(url);
-    //     } else {
-    //         window.open(url, "_blank");
-    //     }
-    // },
-    // viewmore(event) {
-    //     if (event.target.parentElement.classList.value.indexOf("full") > -1) {
-    //         event.target.parentElement.classList.remove("full");
-    //     } else {
-    //         event.target.parentElement.classList.add("full");
-    //     }
-    // },
   },
   mounted() {
     console.log("마운트자리")
