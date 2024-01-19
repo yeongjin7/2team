@@ -1,55 +1,104 @@
 <template>
+  <div>
   <div class="password-reset">
     <h2>비밀번호 찾기</h2>
     <form @submit.prevent="submitForm">
-      <label for="username">아이디:</label>
-      <input type="text" id="username" v-model="username" required />
+      <label for="id">아이디:</label>
+      <input type="text" id="id" v-model="pwData.id" required />
 
       <label for="phone">전화번호:</label>
-      <input type="text" id="phone" v-model="phone" required />
+      <input type="text" id="phone" v-model="pwData.phone" required />
 
       <label for="email">이메일:</label>
-      <input type="email" id="email" v-model="email" required />
+      <input type="email" id="email" v-model="pwData.email" required />
 
-      <button type="submit">찾기</button>
-    </form>
-
-    <h2 style="margin-top: 30px;">아이디 찾기</h2>
-    <form @submit.prevent="submitForm">
-      <label for="phone">전화번호:</label>
-      <input type="text" id="phone" v-model="phone" required />
-
-      <label for="email">이메일:</label>
-      <input type="email" id="email" v-model="email" required />
-
-      <button type="submit">찾기</button>
+      <button type="submit" @click="searchPw">찾기</button>
     </form>
   </div>
+  <div class="id-reset">
+    <h2>아이디 찾기</h2>
+    <form @submit.prevent="submitForm">
+      <label for="phone">전화번호:</label>
+      <input type="text" id="phone" v-model="idData.phone" required />
+
+      <label for="email">이메일:</label>
+      <input type="email" id="email" v-model="idData.email" required />
+
+      <button type="submit" @click="searchId">찾기</button>
+    </form>
+  </div>
+</div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
-      username: '',
-      phone: '',
-      email: '',
+      pwData:{
+        id: '',
+        phone: '',
+        email: '',
+      },
+      idData:{
+        phone: '',
+        email: '',
+      },
+      password: '',
     };
   },
   methods: {
     submitForm() {
-      // 여기에서 아이디 및 이메일을 사용하여 서버로 요청을 보낼 수 있습니다.
-      // 비밀번호 찾기 로직을 구현하세요.
-      console.log('아이디:', this.username);
+      console.log('아이디:', this.id);
       console.log('전화번호:',this.phone);
       console.log('이메일:', this.email);
     },
+    searchPw(){
+      axios.post('http://localhost:5005/searchPw', { searchPw : this.pwData })
+      .then((res)=>{
+        //success가 true면 사용 가능한 ID
+        console.log(res.data.findpw);
+        if(res.data.success){
+          this.password = res.data.findpw.password;
+          alert('비밀번호는 ' + this.password + '입니다.');
+            this.successfindpw = true;
+            
+          }else {
+            alert('입력하신 정보가 일치하지 않습니다.');
+          }
+        });
+    },
+    
+    searchId(){
+      axios.post('http://localhost:5005/searchId', { searchId : this.idData })
+      .then((res)=>{
+        //success가 true면 사용 가능한 ID
+        if(res.data.success){
+          alert('아이디 꺼내줌');
+            this.successfindId = true;
+          }else {
+            alert('입력하신 정보가 일치하지 않습니다.');
+          }
+        });
+    },   
   },
 };
 </script>
 
 <style scoped>
 .password-reset {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.id-reset {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;

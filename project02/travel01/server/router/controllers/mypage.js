@@ -60,7 +60,7 @@ const logintest = async (req, res) => {
       })
 
       if(findLogin){
-        res.cookie( "loginCookie", findLogin.id, {  // 클라이언트에 쿠키를 전송
+        res.cookie( "loginCookie", findLogin.userNo, {  // 클라이언트에 쿠키를 전송
           path: '/',
           httpOnly: true, // 통신할때만 접속할 수 있다. 기본값은 false임 
          });
