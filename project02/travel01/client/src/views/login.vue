@@ -3,25 +3,29 @@
     <h2>로그인</h2>
     <form @submit.prevent="submitForm">
       <div class="form-group">
-        <label for="username">아이디:</label>
-        <input type="text" id="username" placeholder="아이디를 입력하세요." v-model="username" required>
+        <label for="id">아이디:</label>
+        <input type="text" id="id" placeholder="아이디를 입력하세요." v-model="user.id" required>
       </div>
       <div class="form-group">
         <label for="password">비밀번호:</label>
-        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="password" required>
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요." v-model="user.password" required>
       </div>
-      <button type="submit" class="button-primary">로그인</button>
+      <button type="submit" class="button-primary" @click="login">로그인</button>
       <router-link to="/search" class="forgot-password-link">아이디/비밀번호 찾기</router-link>
     </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      user:{
+        id: '',
+        password: '',
+      },
+      successfindid: false
     };
   },
   methods: {
@@ -29,9 +33,22 @@ export default {
       // 여기에 로그인 처리를 위한 코드를 추가합니다.
       // 예를 들어, 서버로 아이디와 비밀번호를 전송하여 인증을 수행할 수 있습니다.
       // 이 예시에서는 간단히 콘솔에 아이디와 비밀번호를 출력하는 것으로 대체합니다.
-      console.log('아이디:', this.username);
+      console.log('아이디:', this.id);
       console.log('비밀번호:', this.password);
     },
+    login(){
+      axios.post('http://localhost:5005/login', { login : this.user }, { withCredentials: true })
+      .then((res)=>{
+        //success가 true면 사용 가능한 ID
+        if(res.data.success){
+          alert('로그인 되었습니다.');
+            this.successfindid = true;
+            this.$router.push('/main');
+          }else {
+            alert('아이디와 비밀번호가 일치하지 않습니다.');
+          }
+        });
+    }
   },
 };
 </script>

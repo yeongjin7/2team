@@ -1,12 +1,8 @@
 const express = require("express");
 const { myPage, editMyPage, logintest, } = require ("./controllers/mypage.js");
-<<<<<<< HEAD
 const { member, checkUsername } = require ("./controllers/member.js");
-
-=======
-const { member } = require ("./controllers/member.js");
-const { main } = require ("./controllers/main.js");
->>>>>>> 79825ddd6ee8b9c049ee934fc581cf7a3ac0a628
+const { login } =require("./controllers/login.js");
+const { searchPw, searchId } = require("./controllers/search.js")
 
 const router = express.Router();
 
@@ -15,10 +11,10 @@ router.get('/mypage', myPage);
 router.put('/mypage/edituser', editMyPage)
 router.post('/member', member)
 router.post('/logintest', logintest)
-<<<<<<< HEAD
 router.post('/checkUsername', checkUsername)
-=======
-router.get('/main', main);
+router.post('/login',login),
+router.post('/searchPw', searchPw),
+router.post('/searchId', searchId)
 
->>>>>>> 79825ddd6ee8b9c049ee934fc581cf7a3ac0a628
+
 module.exports = router;
