@@ -44,12 +44,13 @@
 
           <div v-if="changeCate === 'userBoader'" class="card" @click="changeCategori('userBoader')">
             <div class="card-body">
-              <h2>게시글 목록</h2>
               
               <!-- 게시글 목록 렌더링 -->
               <div v-for="post in boardPosts" :key="post.postId" class="post-item">
-                <h4>{{ post.postTitle }}</h4>
-                <p>{{ post.postContent }}</p>
+                <dib>
+                  {{ post.title }}
+                  {{ post.boardDate }}
+                </dib>
               </div>
             </div>
             <div class="divBtn">
@@ -66,7 +67,7 @@
               <input v-model="singleQnaData.sqTitle" type="text" id="qnaTitle" class="form-control mb-2" placeholder="제목을 입력해주세요.">
               <label for="qnaContent">내용</label>
               <textarea v-model="singleQnaData.sqContent" placeholder="여기에 문의사항을 입력해주세요." class="form-control mb-2" id="qnaContent"></textarea>
-              <textarea v-model="singleQnaData.sqContent" placeholder="운영자 답변을 기다려주세요." class="form-control mb-2" id="qnaAnswer" disabled></textarea>
+              <textarea placeholder="운영자 답변을 기다려주세요." class="form-control mb-2" id="qnaAnswer" disabled></textarea>
               </div>
             </div>
             <div class="divBtn d-flex justify-content-between">
@@ -168,6 +169,7 @@ export default {
       axios.post('http://localhost:5005/logintest', { login: this.login }, { withCredentials: true })
         .then((res) => {
           if (res.data.success) {
+            console.log(res.data)
             alert("로그인 성공임");
             this.$router.push("/");
           } else {
@@ -181,7 +183,8 @@ export default {
       axios.get('http://localhost:5005/boardposts', { withCredentials: true })
         .then(res => {
           console.log(res.data);
-          this.boardPosts = res.data.slice(0, 5)
+          this.boardPosts = res.data;
+          console.log(this.boardPosts);
         })
         .catch(error => {
           console.error('Error fetching board posts:', error);

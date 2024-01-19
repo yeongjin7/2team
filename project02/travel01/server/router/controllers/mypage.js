@@ -6,14 +6,18 @@ const db = require ("../../config/db.js");
 const myPage = async (req, res) => {
     try {
       var cookieData = req.cookies.loginCookie; // 클라이언트가 보낸 cookie를 받음
-      console.log("쿠키 값: ",cookieData);
         var conn = await db.getConnection(); // db에 연결
         const raws = await conn.query("SELECT * FROM user"); // 쿼리문 실행
 
         const findUser = raws.find((data) => {
           return data.userNo == cookieData;
         });
-        console.log(findUser);
+
+        const stringDate = findUser.joinDay;
+        const dateObject = new Date(stringDate);
+        const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')} ${dateObject.getHours().toString().padStart(2, '0')}:${dateObject.getMinutes().toString().padStart(2, '0')}`;
+        findUser.joinDay = formattedDate;
+
         if(findUser){
           res.send(findUser); // res => 응답으로, send => 보냅니다. (vue에서 보이게)
       }
@@ -58,7 +62,6 @@ const singleQna = async (req, res) => {
     const query = await conn.query('INSERT INTO singleqna (userNo, sqTitle, sqContent) VALUE (?, ?, ?)', [cookieData, clientQna.sqTitle, clientQna.sqContent]);
 
     if(query){
-      console.log(7);
       res.send({ success: true });
     }
 
@@ -76,10 +79,19 @@ const boardposts = async (req, res) => {
 
     const value = raws.filter((data) => {
       return data.userNo == cookieData;
-    })
+    });
+
+    value.forEach(item => {
+      const stringDate = item.boardDate;
+      const dateObject = new Date(stringDate);
+      const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')} ${dateObject.getHours().toString().padStart(2, '0')}:${dateObject.getMinutes().toString().padStart(2, '0')}`;
+      item.boardDate = formattedDate;
+      console.log("2", formattedDate);
+  });
+
 
     if(value){
-      console.log("결과", value);
+      res.send(value);
     }
 
   } catch (error) {
@@ -91,13 +103,10 @@ const logintest = async (req, res) => {
   try {
       const conn = await db.getConnection(); // db에 연결
       const loginData = req.body.login; // 로그인시 입력한 id, pw를 클라이언트가 줬고, 그걸 받아옴
-      console.log(loginData);
       const raws = await conn.query("SELECT * FROM user"); // 쿼리문 실행
-      console.log(raws);
       const findLogin = raws.find((data) => { // raws와 로그인id, pw에 같은게 있는지 찾기위해 finde사용
         return data.id == loginData.id && data.password == loginData.password; // 같으면 true를 리턴, 아니면 false
       })
-      console.log(findLogin);
       if(findLogin){
         res.cookie( "userNo", findLogin.userNo, {  // 클라이언트에 쿠키를 전송
           path: '/',
