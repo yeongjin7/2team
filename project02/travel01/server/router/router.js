@@ -5,6 +5,7 @@ const { login } =require("./controllers/login.js");
 const { searchPw, searchId } = require("./controllers/search.js")
 const { main } = require ("./controllers/main.js");
 const { Board } = require ("./controllers/userBoard.js");
+const {KaKaoMap, KaKaoMap2, } = require ("./controllers/KaKaoMap.js");
 
 const router = express.Router();
 
@@ -21,5 +22,7 @@ router.get('/main', main);
 router.get('/userBoard', Board);
 router.post('/singleqna', singleQna)
 router.get('/boardposts', boardposts)
+router.get('/KaKaoMap', KaKaoMap);
+router.get('/KaKaoMap/other', KaKaoMap2);
 
 module.exports = router;
