@@ -11,8 +11,9 @@ const myPage = async (req, res) => {
         const raws = await conn.query("SELECT * FROM user"); // 쿼리문 실행
 
         const findUser = raws.find((data) => {
-          return data.id == cookieData;
-        }) 
+          return data.userNo == cookieData;
+        });
+        console.log(findUser);
         if(findUser){
           res.send(findUser); // res => 응답으로, send => 보냅니다. (vue에서 보이게)
       }
@@ -49,18 +50,56 @@ const editMyPage = async (req, res) => {
     }
 }
 
+const singleQna = async (req, res) => {
+  try {
+    const conn = await db.getConnection();
+    var cookieData = req.cookies.loginCookie;
+    const clientQna = req.body.qna;
+    const query = await conn.query('INSERT INTO singleqna (userNo, sqTitle, sqContent) VALUE (?, ?, ?)', [cookieData, clientQna.sqTitle, clientQna.sqContent]);
+
+    if(query){
+      console.log(7);
+      res.send({ success: true });
+    }
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const boardposts = async (req, res) => {
+  try {
+    const conn = await db.getConnection();
+    var cookieData = req.cookies.loginCookie;
+    const raws = await conn.query("SELECT * FROM board");
+
+    const value = raws.filter((data) => {
+      return data.userNo == cookieData;
+    })
+
+    if(value){
+      console.log("결과", value);
+    }
+
+  } catch (error) {
+    
+  }
+}
+
 const logintest = async (req, res) => {
   try {
       const conn = await db.getConnection(); // db에 연결
       const loginData = req.body.login; // 로그인시 입력한 id, pw를 클라이언트가 줬고, 그걸 받아옴
+      console.log(loginData);
       const raws = await conn.query("SELECT * FROM user"); // 쿼리문 실행
-
+      console.log(raws);
       const findLogin = raws.find((data) => { // raws와 로그인id, pw에 같은게 있는지 찾기위해 finde사용
         return data.id == loginData.id && data.password == loginData.password; // 같으면 true를 리턴, 아니면 false
       })
-
+      console.log(findLogin);
       if(findLogin){
-        res.cookie( "loginCookie", findLogin.id, {  // 클라이언트에 쿠키를 전송
+        res.cookie( "userNo", findLogin.userNo, {  // 클라이언트에 쿠키를 전송
           path: '/',
           httpOnly: true, // 통신할때만 접속할 수 있다. 기본값은 false임 
          });
@@ -80,4 +119,6 @@ module.exports = {
     myPage,
     editMyPage,
     logintest,
+    singleQna,
+    boardposts,
 }
