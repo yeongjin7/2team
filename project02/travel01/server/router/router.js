@@ -2,7 +2,8 @@ const express = require("express");
 const { myPage, editMyPage, logintest, singleQna, boardposts } = require ("./controllers/mypage.js");
 const { member, checkUsername } = require ("./controllers/member.js");
 const { login } =require("./controllers/login.js");
-const { searchPw, searchId } = require("./controllers/search.js")
+const { searchPw } = require("./controllers/search.js");
+const { searchId } = require("./controllers/search.js");
 const { main } = require ("./controllers/main.js");
 const { Board } = require ("./controllers/userBoard.js");
 

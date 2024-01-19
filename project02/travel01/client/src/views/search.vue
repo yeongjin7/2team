@@ -44,7 +44,7 @@ export default {
         phone: '',
         email: '',
       },
-      password: '',
+      successfindpw: false
     };
   },
   methods: {
@@ -57,10 +57,10 @@ export default {
       axios.post('http://localhost:5005/searchPw', { searchPw : this.pwData })
       .then((res)=>{
         //success가 true면 사용 가능한 ID
-        console.log(res.data.findpw);
+        console.log(res.data.pass);
         if(res.data.success){
-          this.password = res.data.findpw.password;
-          alert('비밀번호는 ' + this.password + '입니다.');
+          
+          alert('비밀번호는 ' + res.data.findPw.password + '입니다.');
             this.successfindpw = true;
             
           }else {

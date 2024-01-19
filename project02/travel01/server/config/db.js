@@ -1,10 +1,10 @@
 const mariadb = require('mariadb');
 
 const db = mariadb.createPool({
-    host: '54.180.223.144', 
+    host: 'yoo', 
     // port: 3306,
-    user: 'yoo', 
-    password: '1234',
+    user: 'root', 
+    password: '1234abcd',
     connectionLimit: 30,
     acquireTimeout : 100000,
     database:"travel",
