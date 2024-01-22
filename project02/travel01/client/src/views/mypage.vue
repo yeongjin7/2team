@@ -10,6 +10,7 @@
             <a class="list-group-item" @click="changeCategori('userinfo')">유저 정보</a>
             <a class="list-group-item" @click="changeCategori('userBoader')">게시글 목록</a>
             <a class="list-group-item" @click="changeCategori('userQna')">문의하기</a>
+            <a v-if="user.userNo == '1001'" class="list-group-item" @click="adminPage">관리자</a>
           </div>
         </div>
 
@@ -57,9 +58,35 @@
               <b-button variant="outline-primary" @click="editBtnClick" id="editBtncg">{{ editBtn ? '저장' : '수정' }}</b-button>
             </div>
           </div>
+          
+          <div v-if="changeCate === 'userQna'" class="card" @click="showDetails('userQna')">
+      <div class="card-body">
+        <div v-if="!qnaEditBtn">
+          <div v-if="!selectedQna">
+            <div v-for="qna in qnaListData" :key="qna.qnaId" class="post-item" @click="selectQna(qna)">
+              <div>
+                {{ qna.sqTitle }}
+                {{ qna.sqDate }}
+              </div>
+            </div>
+          </div>
 
-          <div v-if="changeCate === 'userQna'" class="card" @click="changeCategori('userQna')">
-            <div class="card-body">
+          <div v-if="selectedQna" class="qnatext">
+            <label for="emailInput">아이디</label>
+            <input v-model="user.id" type="text" id="qnaInput" class="form-control mb-2" disabled />
+            <label for="qnaTitle">제목</label>
+            <input v-model="selectedQna.sqTitle" type="text" id="qnaTitle" class="form-control mb-2" placeholder="제목을 입력해주세요." disabled>
+            <label for="qnaContent">내용</label>
+            <textarea v-model="selectedQna.sqContent" placeholder="여기에 문의사항을 입력해주세요." class="form-control mb-2" id="qnaContent" disabled></textarea>
+            <label for="qnaAnswer">답변</label>
+            <textarea v-model="selectedQna.sqAnswer" placeholder="운영자 답변을 기다려주세요." class="form-control mb-2" id="qnaAnswer" disabled></textarea>
+            <div class="divBtn d-flex justify-content-between">
+            <b-button variant="outline-primary" @click="qnaEditBtnCancel" id="editBtncg" class="ml-2">취소</b-button>
+          </div>
+          </div>
+        </div>
+
+
               <div class="qnatext" v-if="qnaEditBtn">
                 <label for="emailInput">아이디</label>
               <input v-model="user.id" type="text" id="qnaInput" class="form-control mb-2" disabled />
@@ -67,18 +94,14 @@
               <input v-model="singleQnaData.sqTitle" type="text" id="qnaTitle" class="form-control mb-2" placeholder="제목을 입력해주세요.">
               <label for="qnaContent">내용</label>
               <textarea v-model="singleQnaData.sqContent" placeholder="여기에 문의사항을 입력해주세요." class="form-control mb-2" id="qnaContent"></textarea>
-              <textarea placeholder="운영자 답변을 기다려주세요." class="form-control mb-2" id="qnaAnswer" disabled></textarea>
               </div>
             </div>
             <div class="divBtn d-flex justify-content-between">
-              <b-button variant="outline-primary" @click="qnaEditBtnClick" id="editBtncg" class="ml-2">{{ qnaEditBtn ? '작성' : '글쓰기'
+              <b-button v-if="!selectedQna" variant="outline-primary" @click="qnaEditBtnClick" id="editBtncg" class="ml-2">{{ qnaEditBtn ? '작성' : '글쓰기'
               }}</b-button>
               <b-button v-if="qnaEditBtn" variant="outline-primary" @click="qnaEditBtnCancel" id="editBtncg" class="ml-2">취소</b-button>
             </div>
           </div>
-          <input type="text" v-model="login.id" placeholder="임시 로그인 아이디" />
-          <input type="text" v-model="login.password" placeholder="임시 로그인 비번" />
-          <b-button @click="loginBtn">임시 로그인</b-button>
         </div>
       </div>
     </div>
@@ -97,19 +120,32 @@ export default {
         password: '',
         img: '',
       },
-      singleQnaData: {
+      singleQnaData:{
         sqTitle: '',
         sqContent: '',
-        sqAnswer: '',
       },
+
+      qnaListData: [],
       boardPosts: [],
       editBtn: false,
       qnaEditBtn: false,
       changeCate: 'userinfo',
+      selectedQna: null,
+      sqAnswer: '',
     };
   },
 
   methods: {
+    adminPage(){
+      this.$router.push('admin');
+    },
+  
+    showDetails(category) {
+      this.changeCate = category;
+    },
+    selectQna(qna) {
+      this.selectedQna = qna;
+    },
     changeCategori(category) {
       this.changeCate = category;
     },
@@ -131,6 +167,7 @@ export default {
       this.singleQnaData.sqTitle = '';
       this.singleQnaData.sqContent = '';
       this.qnaEditBtn = false;
+      this.selectedQna = null;
     },
     getName() {
       axios.get('http://localhost:5005/mypage', { withCredentials: true })
@@ -159,23 +196,9 @@ export default {
           this.singleQnaData.sqTitle = '';
           this.singleQnaData.sqContent = '';
           this.qnaEditBtn = false;
+          location.reload();
         }
       })
-    },
-
-
-
-    loginBtn() {
-      axios.post('http://localhost:5005/logintest', { login: this.login }, { withCredentials: true })
-        .then((res) => {
-          if (res.data.success) {
-            console.log(res.data)
-            alert("로그인 성공임");
-            this.$router.push("/");
-          } else {
-            alert("로그인 실패임")
-          }
-        })
     },
 
     getBoardPosts() {
@@ -191,12 +214,21 @@ export default {
         });
     },
 
+    getQnaList() {
+      axios.get('http://localhost:5005/getqnalist', { withCredentials: true })
+      .then(res => {
+        console.log('반갑다',res.data);
+        this.qnaListData = res.data;
+      })
+    }
+
 
 
   },
   mounted() {
     this.getName();
     this.getBoardPosts();
+    this.getQnaList();
   }
 };
 
