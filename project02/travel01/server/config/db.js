@@ -3,8 +3,8 @@ const mariadb = require('mariadb');
 const db = mariadb.createPool({
     host: '15.165.118.139', 
     // port: 3306,
-    user: 'yeongjin7', 
-    password: '12345678999',
+    user: 'yoo', 
+    password: '1234abcd',
     connectionLimit: 30,
     acquireTimeout : 100000,
     database:"travel",
