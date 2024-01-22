@@ -65,6 +65,11 @@ const pageRouter = {
             name: "KaKaoMap",
             component: () => import("@/views/KaKaoMap.vue"),
         },
+        {
+            path: "/admin",
+            name: "admin",
+            component: () => import("@/views/admin.vue"),
+        },
     ],
 };
 export default pageRouter;

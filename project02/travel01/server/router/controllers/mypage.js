@@ -1,4 +1,3 @@
-const { json } = require("express");
 const db = require ("../../config/db.js");
 
 
@@ -71,6 +70,35 @@ const singleQna = async (req, res) => {
   }
 }
 
+const getQnaList = async (req, res) => {
+  try {
+    const conn = await db.getConnection();
+    var cookieData = req.cookies.loginCookie;
+    const raws = await conn.query("SELECT * FROM singleqna");
+    console.log('ㅎㅇㅎㅇ', raws);
+    const value = raws.filter((data) => {
+      return data.userNo == cookieData;
+    });
+    console.log('ㅎㅇㅎㅇ1', value);
+    value.forEach(item => {
+      const stringDate = item.sqDate;
+      const dateObject = new Date(stringDate);
+      const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')} ${dateObject.getHours().toString().padStart(2, '0')}:${dateObject.getMinutes().toString().padStart(2, '0')}`;
+      item.sqDate = formattedDate;
+      console.log("2", formattedDate);
+  });
+  console.log('ㅎㅇㅎㅇ2', value);
+    if(raws){
+
+      res.send(value);
+    }
+
+  } catch (error) {
+    
+  }
+}
+
+
 const boardposts = async (req, res) => {
   try {
     const conn = await db.getConnection();
@@ -130,4 +158,5 @@ module.exports = {
     logintest,
     singleQna,
     boardposts,
+    getQnaList,
 }
