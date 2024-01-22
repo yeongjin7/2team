@@ -7,8 +7,10 @@
         </h1>
         <div class="inputarea">
           <b-button variant="search" class = "searchbtn"><i class="bi bi-search"></i></b-button>
-          <input class = "searchinput" value="가고싶은 여행지를 입력하세요!" >
-          <div class="autolayer" v-if="keyword.length > 0" :class="{ none: autocomplate.length === 0 }">
+          <input class = "searchinput" placeholder="가고싶은 여행지를 입력하세요!">
+          <div class="autolayer"
+               v-if="keyword.length > 0"
+               :class="{ none: autocomplate.length === 0 }">
             <ul v-if="autocomplate.length > 0">
               <li
                   v-for="(item, index) in autocomplate[0].books"
@@ -45,19 +47,18 @@
         </div>
         <div>
             <div class = "rollimg" v-for="(item, boardNo) in board" :key="boardNo">
-              <img class = "BoardImg" :src="item.boardImg" />
+              <img class = "BoardImg" :src="item.boardImg"/>
               <h4 class = "BoardTitle">{{ item.title }}</h4>
             </div>
           </div>
         </div>
     </section>
     <!-- 도서 검색 -->
-
     <!-- 배너 메뉴 -->
     <section class="bannermenu">
       <div class="itembox" v-for="(item, index) in mainbanner" :key="index" @click="gotoPage(item.url)">
         <span v-html="item.stitle"></span>
-        <strong v-html="item.boardtit"></strong>
+        <strong v-html="item.maintit"></strong>
         <i class="bi" :class="item.iconname"></i>
       </div>
     </section>
@@ -80,9 +81,9 @@ export default {
       ],
       keyword: "",
       mainbanner: [
-        { stitle: "작성하기", maintit: "나만의 여행만들기", iconname: "bi-stickies", url: "/userBoardCreate.vue", },
-        { stitle: "유저게시판", maintit: "게시판목록가기", iconname: "bi-book-half", url: "/userBoard.vue", },
-        { stitle: "공지사항", maintit: "공지사항목록가기", iconname: "bi-facebook", url: "/notice.vue", },
+        { stitle: "작성하기", maintit: "나만의 여행만들기", url: "/userBoardCreate", },
+        { stitle: "유저게시판", maintit: "게시판목록가기", url: "/userBoard", },
+        { stitle: "공지사항", maintit: "공지사항목록가기", url: "/notice", },
       ],
     };
   },
@@ -93,6 +94,16 @@ export default {
               this.board = res.data;
               console.log(this.board); // board의 정보를 받겠다
           })
+    },
+    searchBar() { // 해당경로의 내용을 axios로 연결하여 get하겠다. // 8080;
+      axios.get('http://localhost:5005/main2')
+          .then((res) => {
+            this.board = res.data;
+            console.log(this.board);
+          })
+    },
+    gotoPage(url) {
+        this.$router.push(url);
     },
   },
   mounted() {
