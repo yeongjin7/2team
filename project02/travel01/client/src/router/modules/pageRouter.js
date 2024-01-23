@@ -50,11 +50,11 @@ const pageRouter = {
             name: "member",
             component: () => import("@/views/member.vue"),
         },
-        // {
-        //     path: "/Maptest",
-        //     name: "Maptest",
-        //     component: () => import("@/views/userBoardCreate.vue"),
-        // },
+        {
+            path: "/dataDisplay",
+            name: "dataDisplay",
+            component: () => import("@/views/dataDisplay.vue"),
+        },
         {
             path: "/search",
             name: "search",
