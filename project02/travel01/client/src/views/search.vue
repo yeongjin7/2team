@@ -44,7 +44,8 @@ export default {
         phone: '',
         email: '',
       },
-      password: '',
+
+      successfindpw: false
     };
   },
   methods: {
@@ -52,15 +53,16 @@ export default {
       console.log('아이디:', this.id);
       console.log('전화번호:',this.phone);
       console.log('이메일:', this.email);
+      console.log('비밀번호:', this.password);
     },
     searchPw(){
       axios.post('http://localhost:5005/searchPw', { searchPw : this.pwData })
       .then((res)=>{
         //success가 true면 사용 가능한 ID
-        console.log(res.data.findpw);
+        console.log(res.data.pass);
         if(res.data.success){
-          this.password = res.data.findpw.password;
-          alert('비밀번호는 ' + this.password + '입니다.');
+          
+          alert('비밀번호는 ' + res.data.findPw.password + '입니다.');
             this.successfindpw = true;
             
           }else {

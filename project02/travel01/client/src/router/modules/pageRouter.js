@@ -51,6 +51,11 @@ const pageRouter = {
             component: () => import("@/views/login.vue"),
         },
         {
+            path: "/logout",
+            name: "logout",
+            component: () => import("@/views/logout.vue"),
+        },
+        {
             path: "/member",
             name: "member",
             component: () => import("@/views/member.vue"),
