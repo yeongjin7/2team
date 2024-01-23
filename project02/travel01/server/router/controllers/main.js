@@ -11,7 +11,6 @@ const main = async (req, res) => {
         console.error(err);
     }
 }
-
 module.exports = {
     main
 }
