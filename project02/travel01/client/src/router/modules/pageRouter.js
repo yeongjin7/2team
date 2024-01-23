@@ -26,6 +26,11 @@ const pageRouter = {
             component: () => import("@/views/userBoard.vue"),
         },
         {
+            path: "/boardDetail",
+            name: "boardDetail",
+            component: () => import("@/views/boardDetail.vue"),
+        },
+        {
             path: "/myTravel",
             name: "myTravel",
             component: () => import("@/views/myTravel.vue"),
