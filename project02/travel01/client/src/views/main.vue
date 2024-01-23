@@ -46,7 +46,7 @@
           <!--                <b-button variant="tap" @click="AddContents('Newbooks_science')">공지사항</b-button>-->
         </div>
         <div>
-            <div class = "rollimg" v-for="(item, boardNo) in board" :key="boardNo">
+            <div class = "rollimg" v-for="(item, boardNo) in board" :key="boardNo" @click="gotoBoard(item)">
               <img class = "BoardImg" :src="item.boardImg"/>
               <h4 class = "BoardTitle">{{ item.title }}</h4>
             </div>
@@ -104,6 +104,11 @@ export default {
     },
     gotoPage(url) {
         this.$router.push(url);
+    },
+    gotoBoard(board) {
+      // 라우터를 사용하여 특정 게시물로 이동할 수 있습니다. ID 또는 다른 식별자를 사용할 수 있습니다.
+      // 예를 들어, board에 'id' 속성이 있다고 가정합니다.
+      this.$router.push({ name: 'boardDetail', params: { boardNo: board.boardNo}});
     },
   },
   mounted() {
