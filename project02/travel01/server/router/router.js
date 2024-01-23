@@ -20,7 +20,7 @@ router.post('/searchPw', searchPw),
 router.post('/searchId', searchId)
 router.get('/main', main);
 router.get('/userBoard', Board);
-router.post('/singleqna', singleQna)
-router.get('/boardposts', boardposts)
+router.post('/singleqna', singleQna);
+router.get('/boardposts', boardposts);
 
 module.exports = router;
