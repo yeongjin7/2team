@@ -46,6 +46,11 @@ const pageRouter = {
             component: () => import("@/views/login.vue"),
         },
         {
+            path: "/logout",
+            name: "logout",
+            component: () => import("@/views/logout.vue"),
+        },
+        {
             path: "/member",
             name: "member",
             component: () => import("@/views/member.vue"),
@@ -64,6 +69,11 @@ const pageRouter = {
             path: "/KaKaoMap",
             name: "KaKaoMap",
             component: () => import("@/views/KaKaoMap.vue"),
+        },
+        {
+            path: "/admin",
+            name: "admin",
+            component: () => import("@/views/admin.vue"),
         },
     ],
 };

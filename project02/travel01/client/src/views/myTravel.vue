@@ -1,5 +1,17 @@
 <template>
     <div>
-        나만의 여행
+        <KaKaoMap />
     </div>
 </template>
+
+<script>
+
+    import KaKaoMap from "./KaKaoMap.vue"
+
+    export default{
+        name: "userBoardCreate",
+        components:{
+            KaKaoMap
+        },
+};
+</script>

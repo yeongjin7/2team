@@ -18,6 +18,7 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -25,7 +26,7 @@ export default {
         id: '',
         password: '',
       },
-      successfindid: false
+      successfindid: false,
     };
   },
   methods: {
@@ -33,9 +34,10 @@ export default {
       // 여기에 로그인 처리를 위한 코드를 추가합니다.
       // 예를 들어, 서버로 아이디와 비밀번호를 전송하여 인증을 수행할 수 있습니다.
       // 이 예시에서는 간단히 콘솔에 아이디와 비밀번호를 출력하는 것으로 대체합니다.
-      console.log('아이디:', this.id);
-      console.log('비밀번호:', this.password);
+      console.log('아이디:', this.user.id);
+      console.log('비밀번호:', this.user.password);
     },
+
     login(){
       axios.post('http://localhost:5005/login', { login : this.user }, { withCredentials: true })
       .then((res)=>{
@@ -43,7 +45,7 @@ export default {
         if(res.data.success){
           alert('로그인 되었습니다.');
             this.successfindid = true;
-            this.$router.push('/main');
+            // this.$router.push('/main');
           }else {
             alert('아이디와 비밀번호가 일치하지 않습니다.');
           }

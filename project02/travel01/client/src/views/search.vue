@@ -44,6 +44,7 @@ export default {
         phone: '',
         email: '',
       },
+
       successfindpw: false
     };
   },
@@ -52,6 +53,7 @@ export default {
       console.log('아이디:', this.id);
       console.log('전화번호:',this.phone);
       console.log('이메일:', this.email);
+      console.log('비밀번호:', this.password);
     },
     searchPw(){
       axios.post('http://localhost:5005/searchPw', { searchPw : this.pwData })
