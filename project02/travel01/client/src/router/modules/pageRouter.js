@@ -70,6 +70,11 @@ const pageRouter = {
             name: "admin",
             component: () => import("@/views/admin.vue"),
         },
+        {
+            path: "/boardDetail",
+            name: "boardDetail",
+            component: () => import("@/views/boardDetail.vue"),
+        },
     ],
 };
 export default pageRouter;

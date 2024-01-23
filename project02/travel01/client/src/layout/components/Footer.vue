@@ -3,7 +3,7 @@
     <section class = "footerSUM">
         <div class="botinfo">
             <div v-for="bottomCate in bottomInfo" :key="bottomCate">
-                 <router-link :to="{ path: '' }" class="custom-link"> {{ bottomCate }} </router-link>
+                 <router-link :to="{ path: '/' }" class="custom-link"> {{ bottomCate }} </router-link>
                  <!-- 해당 부분에 모달로 넘어가게끔 만들어야 함-->
             </div>
         </div>
@@ -27,8 +27,7 @@
 export default {
     data() {
         return{
-            bottomInfo: [' 찾아오시는길 ', ' 개인정보취급방침 ', ' 이용약관 ', ' 저자신청 ', ' 역자신청 ', ' 교재샘플/강의자료신청 '],
-            /* 항목 바꿀 거 생각해두기 */
+            bottomInfo: [' 개인정보취급방침 ', ' 이용약관 ', ' 저자신청 ', ' 역자신청 '],
         }
     },
 }
@@ -56,5 +55,6 @@ footer{
     display: flex;
     justify-content: center;
     line-height : normal;
+
 }
 </style>

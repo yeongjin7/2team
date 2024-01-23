@@ -4,9 +4,10 @@ const { member, checkUsername } = require ("./controllers/member.js");
 const { login } =require("./controllers/login.js");
 const { searchPw, searchId } = require("./controllers/search.js")
 const { main } = require ("./controllers/main.js");
-const { Board } = require ("./controllers/userBoard.js");
+const { boardData } = require ("./controllers/userBoard.js");
 const { saveSqAnswer } = require ("./controllers/admin.js");
 const {KaKaoMap, KaKaoMap2, } = require ("./controllers/KaKaoMap.js");
+const { asd } = require ("./controllers/boardDetail.js");
 
 
 const router = express.Router();
@@ -21,7 +22,8 @@ router.post('/login',login),
 router.post('/searchPw', searchPw),
 router.post('/searchId', searchId);
 router.get('/main', main);
-router.get('/userBoard', Board);
+router.get('/userBoard', boardData);
+router.get('/boardDetails', asd);
 
 router.post('/singleqna', singleQna);
 router.get('/boardposts', boardposts);
