@@ -74,7 +74,7 @@ const getQnaList = async (req, res) => {
   try {
     const conn = await db.getConnection();
     var cookieData = req.cookies.loginCookie;
-    const raws = await conn.query("SELECT * FROM singleqna");
+    const raws = await conn.query("SELECT sq.*, u.id FROM singleqna sq JOIN user u ON sq.userNo = u.userNo WHERE sq.userNo = ?;", [cookieData]);
     console.log('ㅎㅇㅎㅇ', raws);
     const value = raws.filter((data) => {
       return data.userNo == cookieData;

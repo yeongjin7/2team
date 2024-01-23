@@ -7,7 +7,7 @@ const { searchId } = require("./controllers/search.js");
 const { main } = require ("./controllers/main.js");
 const { Board } = require ("./controllers/userBoard.js");
 const { boardDetail } = require ("./controllers/boardDetail.js");
-const { saveSqAnswer } = require ("./controllers/admin.js");
+const { saveSqAnswer, getUserList, userDelete, getqnalistadmin } = require ("./controllers/admin.js");
 const {KaKaoMap, KaKaoMap2, } = require ("./controllers/KaKaoMap.js");
 
 
@@ -42,5 +42,8 @@ router.get('/KaKaoMap/other', KaKaoMap2);
 router.get('/cookieFind', cookiefind)
 router.get('/cookieFin', cookiefin)
 
+router.get('/userlist', getUserList);
+router.delete('/user/:userId', userDelete);
+router.post('/getqnalistadmin', getqnalistadmin);
 
 module.exports = router;
