@@ -26,6 +26,11 @@ const pageRouter = {
             component: () => import("@/views/userBoard.vue"),
         },
         {
+            path: "/boardDetail",
+            name: "boardDetail",
+            component: () => import("@/views/boardDetail.vue"),
+        },
+        {
             path: "/myTravel",
             name: "myTravel",
             component: () => import("@/views/myTravel.vue"),
@@ -46,15 +51,20 @@ const pageRouter = {
             component: () => import("@/views/login.vue"),
         },
         {
+            path: "/logout",
+            name: "logout",
+            component: () => import("@/views/logout.vue"),
+        },
+        {
             path: "/member",
             name: "member",
             component: () => import("@/views/member.vue"),
         },
-        // {
-        //     path: "/Maptest",
-        //     name: "Maptest",
-        //     component: () => import("@/views/userBoardCreate.vue"),
-        // },
+        {
+            path: "/dataDisplay",
+            name: "dataDisplay",
+            component: () => import("@/views/dataDisplay.vue"),
+        },
         {
             path: "/search",
             name: "search",

@@ -96,7 +96,7 @@
               <textarea v-model="singleQnaData.sqContent" placeholder="여기에 문의사항을 입력해주세요." class="form-control mb-2" id="qnaContent"></textarea>
               </div>
             </div>
-            <div class="divBtn d-flex justify-content-between">
+            <div class="divBtn">
               <b-button v-if="!selectedQna" variant="outline-primary" @click="qnaEditBtnClick" id="editBtncg" class="ml-2">{{ qnaEditBtn ? '작성' : '글쓰기'
               }}</b-button>
               <b-button v-if="qnaEditBtn" variant="outline-primary" @click="qnaEditBtnCancel" id="editBtncg" class="ml-2">취소</b-button>
@@ -235,43 +235,69 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-  margin-left: 300px;
-  margin-bottom: 20px;
+.container {
+  margin-top: 5rem;
+}
+
+.list-group-item {
+  cursor: pointer;
 }
 
 .card {
   height: 600px;
   width: 600px;
-  align-items: center;
   margin: auto;
   margin-bottom: 70px;
   border: 2px solid rgb(0, 0, 0);
+  border-radius: 10px; /* 둥근 테두리 추가 */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
 
 .card-body {
   margin-top: 30px;
 }
 
-input {
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group-label {
+  width: 100px;
+  display: inline-block;
+  font-weight: bold; /* 굵은 글씨체 추가 */
+}
+
+.input-group-input {
   width: 400px;
+  padding: 8px; /* 내용과의 간격 조절 */
+  border: 1px solid #ccc; /* 입력창 테두리 추가 */
+  border-radius: 5px; /* 둥근 테두리 추가 */
 }
 
 .divBtn {
   padding-bottom: 30px;
+  width: 100px;
+  margin-left: 40%;
 }
 
 .udBtn {
   color: azure;
 }
 
-textarea {
-  height: 150px;
+.qnatext {
+  margin-bottom: 1rem;
 }
 
 .post-item {
   margin-bottom: 20px;
   border: 1px solid #ccc;
   padding: 10px;
+  text-align: center;
+  border-radius: 5px; /* 둥근 테두리 추가 */
+  background-color: #f8f9fa; /* 배경색 추가 */
+}
+
+.post-item:hover {
+  background-color: rgba(53, 117, 255, 0.562);
 }
 </style>

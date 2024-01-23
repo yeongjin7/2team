@@ -18,6 +18,7 @@ const login = async (req, res) => {
       })
       console.log(findId);
 
+
       //DB와 클라이언트가 입력한 아이디가 같지 않아야 사용 가능한 ID이기 때문에 findID가 달라야 success가 true
       if(findId){
         res.cookie( "loginCookie", findId.userNo, {  // 클라이언트에 쿠키를 전송
@@ -33,7 +34,32 @@ const login = async (req, res) => {
     }
    }
   
+   const cookiefind = async (req, res) => {
+    try{
+      if(req.cookies.loginCookie){
+        res.send({ success:true });
+      }
+
+    }catch(err){
+        console.log(err)
+    }
+   }
+
+   const cookiefin = async (req, res) => {
+    try{
+      console.log("1");
+        res.clearCookie('loginCookie',{
+          path: '/',
+          httpOnly: true,
+        });
+        console.log("1");
+        res.send({ success:true });
+
+    }catch(err){
+        console.log(err)
+    }
+   }
   
   module.exports = {
-      login
+      login, cookiefind, cookiefin
   }

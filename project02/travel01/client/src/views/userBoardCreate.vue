@@ -1,6 +1,21 @@
 <template>
     <div>
-        유저게시판 만들기
+      <dataDisplay />
     </div>
-</template>
+  </template>
+  
+  <script>
+  import dataDisplay from './dataDisplay.vue';
+  
+  export default {
+  
+    components: {
+      dataDisplay,
+    },
+  };
+  </script>
+  
+  <style scoped>
 
+  </style>
+  
