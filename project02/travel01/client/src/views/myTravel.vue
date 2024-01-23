@@ -9,8 +9,8 @@
     import KaKaoMap from "./KaKaoMap.vue"
 
     export default{
-        name: "userBoardCreate",
-        components:{
+        name: "myTravel",
+        components:{           
             KaKaoMap
         },
 };

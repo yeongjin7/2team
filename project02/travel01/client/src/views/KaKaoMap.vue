@@ -1,27 +1,40 @@
 <template>
   <div>
     <div id="map"></div> 
-  
-  
-  <div id="place">
-    <button class="placeBtn"  @click="displayMarker(markerPositions1)">강릉 여행 1번</button>    
-      <ul class="placeSub" v-show="showList">
+    <div id="place">
+    <button class="placeBtn"  @click="displayMarker(markerPositions1, map_board, 'list1')">강릉 여행 1번</button>    
+      <ul class="placeSub" v-show="showList1">
         <li class="placeList">
           <div class="placeSubList" v-for="item in map_board"  :key="item.id">
           <img class="gangrengImg" :src="item.mapImg" style="width: 100px; height: 50px;">
           <h4>{{ item.mapName }}</h4>
           <p>{{ item.mapCont }}</p>
           </div>
-          <button @click="storagePlace">저장하기</button>
+          <button @click="storagePlace(item, map_board)">저장하기</button>
+          <button @click="closeList('list1')">목록닫기</button>
         </li>
       </ul>
-      <button class="placeBtn" @click="displayMarker(markerPositions2)">강릉 여행 2번</button>
-      <div>
+      <!-- <button class="placeBtn" @click="displayMarker(markerPositions2)">강릉 여행 2번</button>
+      <div> 
         <div v-for="item in map_board2" :key="item.id">
         <h4>{{ item.mapName }}</h4>
         <p>{{ item.mapCont }}</p>
         </div>
-      </div>
+      </div> -->
+      <div>
+      <button class="placeBtn" @click="displayMarker(markerPositions2, map_board2, 'list2')">강릉 여행 2번</button>
+      <ul class="placeSub" v-show="showList2">
+        <li class="placeList">
+          <div class="placeSubList" v-for="item in map_board2"  :key="item.id">
+          <img class="gangrengImg" :src="item.mapImg" style="width: 100px; height: 50px;">
+          <h4>{{ item.mapName }}</h4>
+          <p>{{ item.mapCont }}</p>
+          </div>
+          <button @click="storagePlace(item, map_board2)">저장하기</button>
+          <button @click="closeList('list2')">목록닫기</button>
+        </li>
+      </ul>
+    </div>
     </div>
   </div>
 
@@ -31,24 +44,14 @@
 import axios from "axios";
 import { toRaw } from "vue";
 export default {
+
   name: "KakaoMap",
   data() {
     return {
       map_board:[],
       map_board2:[],
-      showList:false,
-      // test_board:{        
-      //   test_name:"", 
-      //   test_cont:"",
-      //   test_lat:"",
-      //   test_lng:"",
-      // },
-      // test_board2:{        
-      //   test_name:"", 
-      //   test_cont:"",
-      //   test_lat:"",
-      //   test_lng:"",
-      // },
+      showList1:false,
+      showList2:false,
       // storagePlace:[],
 
       infowindows: [],
@@ -61,13 +64,11 @@ export default {
         [37.75590269299039, 128.89749178104333], //강릉월화거리
       ],
       markerPositions2: [
-        [37.499590490909185, 127.0263723554437],
-        [37.499427948430814, 127.02794423197847],
-        [37.498553760499505, 127.02882598822454],
-        [37.497625593121384, 127.02935713582038],
-        [37.49629291770947, 127.02587362608637],
-        [37.49754540521486, 127.02546694890695],
-        [37.49646391248451, 127.02675574250912],
+        [37.7775486544885, 128.87721641370342], //오죽헌시립박물관
+        [37.77808079274927, 128.88022618371667], // 강릉자수박물관
+        [37.79773702104215, 128.897308410019], //강릉에디슨박물관 
+        [37.7742622239505, 128.94322088751557], //환희컵박물관
+        [37.70582245194149, 129.0094853242763],  //하슬라아트박물관
       ],
     };
   },
@@ -93,7 +94,7 @@ export default {
           this.map_board = res.data
           // this.test_board.test_name = res.data.name;
           // this.test_board.test_cont = res.data.cont;
-          console.log(this.test_board)
+        
         })
         .catch((err) => {
           console.log('Error fetching data :' , err)
@@ -104,22 +105,24 @@ export default {
         .then((res) => {
           console.log("test2");
           this.map_board2 = res.data
-          console.log(this.test_board2)
+         
         })
         .catch((err) => {
           console.log('Error fetching data :' , err)
         })
     },
-    storagePlace(){
-      axios.post('http://localhost:5005/storagePlace', {})
-       .then((res)=> {
-        if(res.data.success){
-          alert("성공적으로 저장되었습니다.")
-          this.storagePlaceData.stName = '';
-          this.storagePlaceData.stCont = '';
-          this.qnaEditBtn = false;
-        }
-    })
+
+    storagePlace(item, mapData) {
+      this.selectedMarkerData = item;
+      this.$store.dispatch('storeData', mapData);
+      console.log('Stored Data:', this.$store.getters.getStoredData);
+    },
+    closeList(listName){  
+      if (listName === 'list1') {
+        this.showList1 = false;
+      } else if (listName === 'list2') {
+        this.showList2 = false;
+      }
     },
     initMap() {
       const container = document.getElementById("map");
@@ -138,7 +141,14 @@ export default {
       container.style.height = `${size}px`;
       toRaw(this.map).relayout();
     },
-    displayMarker(markerPositions) {
+    displayMarker(markerPositions, mapData, listName) {
+      if (listName === 'list1') {
+        this.showList1 = true;
+        this.showList2 = false;
+      } else if (listName === 'list2') {
+        this.showList1 = false;
+        this.showList2 = true;
+      }
       // Clear existing markers and infowindows
       this.markers.forEach((marker) => marker.setMap(null));
       this.markers = [];
@@ -156,17 +166,25 @@ export default {
             position,
           });
 
-          const infowindowContent = `<div style="padding:5px;">Marker ${index + 1}</div>`;
+          const mapBoardData = mapData[index]; // Assuming map_board has corresponding data
+
+            const infowindowContent = `
+              <div style="padding: 10px;">
+                <p>${mapBoardData.mapName}</p>
+              </div>
+            `;          
+          // const infowindowContent = `<div style="padding:5px;">Marker ${index + 1}</div>`;
 
           const infowindow = new window.kakao.maps.InfoWindow({
-            map: null,
+            map: toRaw(this.map),
             position,
             content: infowindowContent,
             removable: true,
           });
+          infowindow.open(toRaw(this.map), marker);
 
           kakao.maps.event.addListener(marker, "click", () => {
-            // Close all other infowindows before opening the current one
+
             this.infowindows.forEach((iw) => iw.close());
             infowindow.open(toRaw(this.map), marker);
           });
@@ -183,12 +201,8 @@ export default {
 
         toRaw(this.map).setBounds(bounds);
       }
-      this.showList = true;
     },    
-    toggleShow(){
-        this.show = !this.show;
-    },
- 
+
   },
 };
 </script>
