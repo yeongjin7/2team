@@ -5,7 +5,7 @@ const { login, cookiefind, cookiefin } =require("./controllers/login.js");
 const { searchPw } = require("./controllers/search.js");
 const { searchId } = require("./controllers/search.js");
 const { main } = require ("./controllers/main.js");
-const { Board } = require ("./controllers/userBoard.js");
+const { boardData } = require ("./controllers/userBoard.js");
 const { boardDetail } = require ("./controllers/boardDetail.js");
 const { saveSqAnswer, getUserList, userDelete, getqnalistadmin } = require ("./controllers/admin.js");
 const {KaKaoMap, KaKaoMap2, } = require ("./controllers/KaKaoMap.js");
@@ -24,7 +24,7 @@ router.post('/login',login),
 router.post('/searchPw', searchPw),
 router.post('/searchId', searchId);
 router.get('/main', main);
-router.get('/userBoard', Board);
+router.get('/userBoard', boardData);
 router.post('/boardDetail',boardDetail );
 
 router.post('/singleqna', singleQna);
