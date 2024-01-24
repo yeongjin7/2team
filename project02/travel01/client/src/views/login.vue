@@ -45,7 +45,8 @@ export default {
         if(res.data.success){
           alert('로그인 되었습니다.');
             this.successfindid = true;
-            // this.$router.push('/main');
+            
+           this.$router.push('/main');
           }else {
             alert('아이디와 비밀번호가 일치하지 않습니다.');
           }

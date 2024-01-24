@@ -11,6 +11,6 @@ const db = mariadb.createPool({
     connectionLimit: 30,
     database:"travel",
   });
-
+  
 
   module.exports = db;
