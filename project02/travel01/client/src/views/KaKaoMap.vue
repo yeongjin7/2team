@@ -14,14 +14,7 @@
           <button @click="closeList('list1')">목록닫기</button>
         </li>
       </ul>
-      <!-- <button class="placeBtn" @click="displayMarker(markerPositions2)">강릉 여행 2번</button>
-      <div> 
-        <div v-for="item in map_board2" :key="item.id">
-        <h4>{{ item.mapName }}</h4>
-        <p>{{ item.mapCont }}</p>
-        </div>
-      </div> -->
-      <div>
+ 
       <button class="placeBtn" @click="displayMarker(markerPositions2, map_board2, 'list2')">강릉 여행 2번</button>
       <ul class="placeSub" v-show="showList2">
         <li class="placeList">
@@ -34,7 +27,7 @@
           <button @click="closeList('list2')">목록닫기</button>
         </li>
       </ul>
-    </div>
+
     </div>
   </div>
 
@@ -210,9 +203,9 @@ export default {
 <style scoped>
 #map {
   /* display: none; */
-  position: absolute;
-  width: 400px;
-  height: 400px;
+  position: relative;
+  width: 100%;
+  height: 70vh;
 }
 
 .placeList{
@@ -229,30 +222,37 @@ export default {
   flex-direction: column;
 }
 
-.place {
-  display: none;
+#place {  
+  /* position: absolute; */
+  top: 10px; 
+  right: 10px; 
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+}
+.placeSub {
+  position: absolute;
+  top: 0;
+  /* left: -200px; */
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000; 
 }
 
 .placeBtn {
   position: relative;
   float: right;
   margin-top: 10px;
-  /* Remove the following line */
-  /* display: block; */
 }
 
-.placeBtn .place {
-  position: relative;
-  float: right;
-  margin-top: 10px;
-}
 
 .button-group {
-  margin: 10px 0px;
+  margin-top: 10px;
+  position: relative;
 }
 
-button {
-  margin: 0 3px;
-}
 
 </style>
